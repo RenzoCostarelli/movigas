@@ -1,0 +1,223 @@
+---
+const products = [
+  {
+    number: "01",
+    name: "Amoniaco Anhidro",
+    description:
+      "Comercialización de Amoniaco Anhidro a granel, sus subproductos y servicios derivados para el mercado nacional e internacional.",
+  },
+  {
+    number: "02",
+    name: "Transporte de Cargas Peligrosas",
+    description:
+      "Más de 60 años de trayectoria en el transporte seguro y eficiente de sustancias peligrosas en todo el territorio.",
+  },
+  {
+    number: "03",
+    name: "Soluciones a Medida",
+    description:
+      "Servicios personalizados adaptados a las necesidades específicas de cada cliente, con la confianza de décadas de experiencia.",
+  },
+];
+---
+
+<section data-products-section class="py-24 bg-neutral-950 text-white overflow-hidden">
+  <div class="container mx-auto px-6">
+
+    <!-- Section header -->
+    <div class="mb-20 flex flex-col gap-6">
+      <div class="flex flex-col gap-4">
+        <span data-products-label class="text-xs uppercase tracking-[0.3em] text-neutral-400 font-medium">
+          Lo que ofrecemos
+        </span>
+        <h2 data-products-heading class="text-6xl font-bold leading-none tracking-tight">
+          Nuestros Productos
+        </h2>
+      </div>
+      <p data-products-subtitle class="text-base text-neutral-400 leading-relaxed max-w-xl md:mb-2 text-balance">
+        Desde el transporte de cargas peligrosas hasta la comercialización de
+        Amoniaco Anhidro, brindamos soluciones integrales con más de seis
+        décadas de trayectoria en el mercado nacional e internacional.
+      </p>
+    </div>
+
+    <!-- Products grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6">
+      {
+        products.map((product) => (
+          <article data-product-card class="group flex flex-col gap-6">
+            <!-- Image placeholder -->
+            <div
+              data-product-image
+              class="w-full aspect-[4/5] bg-neutral-800 rounded-lg overflow-hidden relative"
+            >
+              <div class="absolute inset-0 bg-gradient-to-t from-neutral-950/60 to-transparent" />
+            </div>
+
+            <!-- Card content -->
+            <div class="flex flex-col gap-3 pb-8 border-b border-neutral-800">
+              <span data-product-number class="text-xs text-neutral-500 font-mono tracking-widest">
+                {product.number}
+              </span>
+              <h3 data-product-name class="text-2xl font-semibold leading-tight">
+                {product.name}
+              </h3>
+              <p data-product-desc class="text-sm text-neutral-400 leading-relaxed text-balance">
+                {product.description}
+              </p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+  </div>
+</section>
+
+<script>
+  import { gsap, ScrollTrigger, SplitText } from "../../lib/gsap";
+
+  const section = document.querySelector("[data-products-section]") as HTMLElement;
+
+  gsap.context(() => {
+    // --- Split text elements ---
+    const splitHeading = new SplitText("[data-products-heading]", {
+      type: "chars,words",
+    });
+    const splitLabel = new SplitText("[data-products-label]", {
+      type: "chars",
+    });
+    const splitSubtitle = new SplitText("[data-products-subtitle]", {
+      type: "lines",
+    });
+    const productNames = document.querySelectorAll("[data-product-name]");
+    const splitNames = Array.from(productNames).map(
+      (el) => new SplitText(el, { type: "lines" })
+    );
+    const productDescs = document.querySelectorAll("[data-product-desc]");
+    const splitDescs = Array.from(productDescs).map(
+      (el) => new SplitText(el, { type: "lines" })
+    );
+
+    // --- Initial states ---
+    gsap.set(splitLabel.chars, { opacity: 0, y: 8 });
+    gsap.set(splitHeading.chars, { opacity: 0, y: 40, rotateX: -15 });
+    gsap.set(splitSubtitle.lines, { opacity: 0, y: 12 });
+    gsap.set("[data-product-card]", { opacity: 0, y: 60 });
+    gsap.set("[data-product-image]", { scale: 1.05 });
+    splitNames.forEach((s) => gsap.set(s.lines, { opacity: 0, y: 16 }));
+    splitDescs.forEach((s) => gsap.set(s.lines, { opacity: 0 }));
+    gsap.set("[data-product-number]", { opacity: 0 });
+
+    // --- Header timeline ---
+    const tlHeader = gsap.timeline({ paused: true });
+
+    tlHeader
+      .to(splitLabel.chars, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        stagger: 0.015,
+        ease: "power2.out",
+      })
+      .to(
+        splitHeading.chars,
+        {
+          opacity: 1,
+          y: 0,
+          rotateX: 0,
+          duration: 0.8,
+          stagger: 0.02,
+          ease: "power3.out",
+        },
+        "-=0.3"
+      )
+      .to(
+        splitSubtitle.lines,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          stagger: 0.1,
+          ease: "power2.out",
+        },
+        "-=0.4"
+      );
+
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top 75%",
+      end: "top 30%",
+      animation: tlHeader,
+      scrub: true,
+    });
+
+    // --- Cards timeline ---
+    const tlCards = gsap.timeline({ paused: true });
+
+    tlCards.to("[data-product-card]", {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      stagger: 0.15,
+      ease: "power3.out",
+    });
+
+    tlCards.to(
+      "[data-product-image]",
+      {
+        scale: 1,
+        duration: 1.2,
+        stagger: 0.15,
+        ease: "power3.out",
+      },
+      "<"
+    );
+
+    tlCards.to(
+      "[data-product-number]",
+      {
+        opacity: 1,
+        duration: 0.4,
+        stagger: 0.15,
+        ease: "power2.out",
+      },
+      "-=0.6"
+    );
+
+    splitNames.forEach((s, i) => {
+      tlCards.to(
+        s.lines,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          stagger: 0.08,
+          ease: "power2.out",
+        },
+        `-=${0.5 - i * 0.05}`
+      );
+    });
+
+    splitDescs.forEach((s, i) => {
+      tlCards.to(
+        s.lines,
+        {
+          opacity: 1,
+          duration: 0.5,
+          stagger: 0.06,
+          ease: "power2.out",
+        },
+        `-=${0.4 - i * 0.05}`
+      );
+    });
+
+    ScrollTrigger.create({
+      trigger: "[data-product-card]",
+      start: "top 80%",
+      end: "bottom 40%",
+      animation: tlCards,
+      scrub: true,
+    });
+  }, section);
+</script>

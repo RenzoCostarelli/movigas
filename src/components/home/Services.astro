@@ -1,0 +1,242 @@
+---
+const transportList = [
+  { text: "Transporte de GLP (Butano - Propano)", accent: true },
+  { text: "Transporte de combustibles", accent: false },
+  { text: "Transporte de Fertilizantes", accent: false },
+  { text: "Transporte de Amoniaco", accent: true },
+];
+---
+
+<section
+  data-services-section
+  class="py-24 bg-white text-neutral-900 overflow-hidden"
+>
+  <div class="container mx-auto px-6">
+    <!-- Label -->
+    <div class="flex justify-center mb-8">
+      <span
+        data-services-label
+        class="text-xs font-semibold uppercase tracking-[0.4em] text-red-600"
+      >
+        Transporte
+      </span>
+    </div>
+
+    <!-- Heading -->
+    <h2
+      data-services-heading
+      class="text-center text-5xl md:text-7xl leading-[1.05] tracking-tight mb-16 max-w-4xl mx-auto"
+    >
+      <span class="font-light">La </span><span class="font-black"
+        >estructura</span
+      ><span class="font-light">
+        necesaria para operativos de logísticas y
+      </span><span class="font-black">abastecimiento</span>
+    </h2>
+
+    <!-- Main image placeholder -->
+    <div
+      data-services-image-main
+      class="w-full aspect-16/7 bg-neutral-100 rounded-xl mb-16 overflow-hidden"
+    >
+    </div>
+
+    <!-- Body text -->
+    <div class="max-w-2xl mx-auto text-center mb-12">
+      <p data-services-body class="text-base text-neutral-600 leading-relaxed">
+        Contamos con la estructura técnica y operativa necesaria para resolver
+        las más variadas alternativas de operativos de logísticas y
+        abastecimiento a nivel nacional e internacional, posicionándonos dentro
+        de las más importantes empresas prestadoras del servicio de transporte
+        de cargas peligrosas.
+      </p>
+    </div>
+
+    <!-- Product list intro -->
+    <p
+      data-services-intro
+      class="text-center text-sm text-neutral-500 uppercase tracking-widest mb-8"
+    >
+      Esta estructura nos permite realizar la logística de los siguientes
+      productos:
+    </p>
+
+    <!-- Transport list -->
+    <!-- <ul class="flex flex-col items-center gap-3 mb-20">
+      {
+        transportList.map((item, i) => (
+          <li
+            data-services-item
+            class={`text-lg md:text-xl font-medium tracking-tight ${
+              item.accent ? "text-red-600" : "text-neutral-400"
+            }`}
+          >
+            {item.text}
+          </li>
+        ))
+      }
+    </ul> -->
+
+    <!-- Three thumbnails -->
+    <div class="grid grid-cols-3 gap-4 md:gap-6">
+      <div
+        data-services-thumb
+        class="aspect-4/3 bg-neutral-100 rounded-lg overflow-hidden"
+      >
+      </div>
+      <div
+        data-services-thumb
+        class="aspect-4/3 bg-neutral-100 rounded-lg overflow-hidden"
+      >
+      </div>
+      <div
+        data-services-thumb
+        class="aspect-4/3 bg-neutral-100 rounded-lg overflow-hidden"
+      >
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap, ScrollTrigger, SplitText } from "../../lib/gsap";
+
+  const section = document.querySelector(
+    "[data-services-section]",
+  ) as HTMLElement;
+
+  gsap.context(() => {
+    // --- Split text ---
+    const splitLabel = new SplitText("[data-services-label]", {
+      type: "chars",
+    });
+    const splitHeading = new SplitText("[data-services-heading]", {
+      type: "words",
+    });
+    const splitBody = new SplitText("[data-services-body]", { type: "lines" });
+    const splitIntro = new SplitText("[data-services-intro]", {
+      type: "chars",
+    });
+
+    // --- Initial states ---
+    gsap.set(splitLabel.chars, { opacity: 0, y: 10 });
+    gsap.set(splitHeading.words, { opacity: 0, y: 50, rotateX: -20 });
+    gsap.set("[data-services-image-main]", { opacity: 0, scale: 0.97, y: 20 });
+    gsap.set(splitBody.lines, { opacity: 0, y: 12 });
+    gsap.set(splitIntro.chars, { opacity: 0 });
+    gsap.set("[data-services-item]", { opacity: 0, y: 16 });
+    gsap.set("[data-services-thumb]", { opacity: 0, y: 30, scale: 0.98 });
+
+    // --- Header timeline (label + heading) ---
+    const tlHeader = gsap.timeline({ paused: true });
+
+    tlHeader
+      .to(splitLabel.chars, {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        stagger: 0.02,
+        ease: "power2.out",
+      })
+      .to(
+        splitHeading.words,
+        {
+          opacity: 1,
+          y: 0,
+          rotateX: 0,
+          duration: 0.8,
+          stagger: 0.04,
+          ease: "power3.out",
+        },
+        "-=0.2",
+      );
+
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top 75%",
+      end: "top 20%",
+      animation: tlHeader,
+      scrub: true,
+    });
+
+    // --- Image timeline ---
+    const tlImage = gsap.timeline({ paused: true });
+
+    tlImage.to("[data-services-image-main]", {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      duration: 1.2,
+      ease: "power3.out",
+    });
+
+    ScrollTrigger.create({
+      trigger: "[data-services-image-main]",
+      start: "top 85%",
+      end: "top 40%",
+      animation: tlImage,
+      scrub: true,
+    });
+
+    // --- Body + list timeline ---
+    const tlContent = gsap.timeline({ paused: true });
+
+    tlContent
+      .to(splitBody.lines, {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        stagger: 0.1,
+        ease: "power2.out",
+      })
+      .to(
+        splitIntro.chars,
+        {
+          opacity: 1,
+          duration: 0.6,
+          stagger: 0.008,
+          ease: "power2.out",
+        },
+        "-=0.2",
+      )
+      .to(
+        "[data-services-item]",
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          stagger: 0.1,
+          ease: "power2.out",
+        },
+        "-=0.3",
+      );
+
+    ScrollTrigger.create({
+      trigger: "[data-services-body]",
+      start: "top 80%",
+      end: "bottom 20%",
+      animation: tlContent,
+      scrub: true,
+    });
+
+    // --- Thumbnails timeline ---
+    const tlThumbs = gsap.timeline({ paused: true });
+
+    tlThumbs.to("[data-services-thumb]", {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      duration: 0.8,
+      stagger: 0.12,
+      ease: "power3.out",
+    });
+
+    ScrollTrigger.create({
+      trigger: "[data-services-thumb]",
+      start: "top 85%",
+      end: "top 40%",
+      animation: tlThumbs,
+      scrub: true,
+    });
+  }, section);
+</script>

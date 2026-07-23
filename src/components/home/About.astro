@@ -1,0 +1,79 @@
+<section data-about-section class="h-screen py-12">
+  <div class="container mx-auto h-full">
+    <div class="grid grid-cols-2 gap-4 h-full">
+      <div class="flex justify-center flex-col">
+        <h2 data-about-heading class="text-5xl font-bold mb-4">Nosotros</h2>
+        <p data-about-body class="text-2xl text-balance">
+          Movigas SRL es una empresa familiar y de capital 100% nacional fundada
+          en 1958 dedicada al transporte y distribución de sustancias
+          peligrosas. Nuestros más de 60 años de trayectoria nos permitieron
+          insertarnos en el mercado nacional e internacional posicionándonos
+          exitosamente como prestadores del servicio de transporte de cargas
+          peligrosas y diversificando nuestra actividad a la comercialización de
+          Amoniaco Anhidro a granel, sus subproductos y servicios derivados del
+          mismo.
+        </p>
+      </div>
+      <div data-about-image class="h-full w-full bg-neutral-300 rounded-md">
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap, ScrollTrigger, SplitText } from "../../lib/gsap";
+
+  const section = document.querySelector("[data-about-section]") as HTMLElement;
+
+  gsap.context(() => {
+    const splitHeading = new SplitText("[data-about-heading]", {
+      type: "chars,words",
+    });
+    const splitBody = new SplitText("[data-about-body]", { type: "lines" });
+
+    gsap.set(splitHeading.words, { opacity: 0, y: 20 });
+    gsap.set(splitBody.lines, { opacity: 0.25 });
+    gsap.set("[data-about-image]", { opacity: 0, y: 24 });
+
+    const tl = gsap.timeline({ paused: true });
+
+    tl.to(splitHeading.words, {
+      opacity: 1,
+      y: 0,
+      rotateX: 0,
+      duration: 0.6,
+      stagger: 0.025,
+      ease: "power3.out",
+    })
+      .to(
+        splitBody.lines,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          stagger: 0.1,
+          ease: "power2.out",
+        },
+        "-=0.2",
+      )
+      .to(
+        "[data-about-image]",
+        {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          duration: 2,
+          ease: "power3.inOut",
+        },
+        "-=0.5",
+      );
+
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top center",
+      end: "center center",
+      animation: tl,
+      scrub: true,
+    });
+  }, section);
+</script>
