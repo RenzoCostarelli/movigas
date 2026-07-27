@@ -1,0 +1,205 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { products, getProductBySlug } from "../../data/products";
+
+export function getStaticPaths() {
+  return products.map((product) => ({
+    params: { slug: product.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const product = getProductBySlug(slug);
+
+if (!product) return Astro.redirect("/404");
+---
+
+<Layout title={`${product.name} — MoviGas`}>
+  <section class="pt-20 pb-24 bg-white text-neutral-900">
+    <div class="container mx-auto px-6">
+      <div class="mb-16 flex flex-col gap-4">
+        <a
+          href="/"
+          class="text-xs uppercase tracking-[0.3em] text-neutral-400 font-medium hover:text-neutral-900 transition-colors w-fit"
+        >
+          ← Inicio
+        </a>
+        <h1 class="text-6xl font-bold leading-none tracking-tight">
+          {product.name}
+        </h1>
+        <p class="text-lg text-neutral-500 leading-relaxed max-w-2xl">
+          {product.tagline}
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div class="lg:col-span-2 flex flex-col gap-12">
+          <div
+            class="w-full aspect-video bg-neutral-100 rounded-xl overflow-hidden relative"
+          >
+            <div
+              class="absolute inset-0 bg-linear-to-t from-neutral-200/60 to-transparent"
+            >
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-4">
+            <h2 class="text-2xl font-semibold">Descripción</h2>
+            <p class="text-neutral-500 leading-relaxed">
+              {product.description}
+            </p>
+          </div>
+
+          <div class="flex flex-col gap-4">
+            <h2 class="text-2xl font-semibold">Aplicaciones</h2>
+            <ul class="flex flex-col gap-2">
+              {
+                product.applications.map((app) => (
+                  <li class="flex items-start gap-3 text-neutral-500">
+                    <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0" />
+                    {app}
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+
+          {
+            product.services.length > 0 && (
+              <div class="flex flex-col gap-6">
+                <h2 class="text-2xl font-semibold">Servicios</h2>
+                <div class="flex flex-col gap-6">
+                  {product.services.map((service) => (
+                    <div class="flex flex-col gap-2 pb-6 border-b border-neutral-200 last:border-0">
+                      <h3 class="text-base font-semibold">{service.title}</h3>
+                      <p class="text-sm text-neutral-500 leading-relaxed">
+                        {service.description}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )
+          }
+        </div>
+
+        <aside class="flex flex-col gap-8">
+          {
+            product.presentations.length > 0 && (
+              <div class="flex flex-col gap-4 p-6 bg-neutral-100 rounded-xl">
+                <h3 class="text-sm uppercase tracking-[0.2em] text-neutral-400 font-medium">
+                  Presentaciones
+                </h3>
+                <ul class="flex flex-col gap-2">
+                  {product.presentations.map((p) => (
+                    <li class="text-sm text-neutral-700 leading-relaxed">
+                      {p}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )
+          }
+
+          <div class="flex flex-col gap-2 p-6 bg-neutral-100 rounded-xl">
+            <h3
+              class="text-sm uppercase tracking-[0.2em] text-neutral-400 font-medium"
+            >
+              Cobertura
+            </h3>
+            <p class="text-sm text-neutral-700">{product.coverage}</p>
+          </div>
+
+          <div class="flex flex-col gap-3 p-6 bg-neutral-100 rounded-xl">
+            <h3
+              class="text-sm uppercase tracking-[0.2em] text-neutral-400 font-medium mb-1"
+            >
+              Documentación
+            </h3>
+            <a
+              href={product.pdfs.fichaTecnica}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center gap-3 text-sm text-neutral-700 hover:text-neutral-900 transition-colors"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-4 h-4 shrink-0 text-neutral-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
+                ></path>
+              </svg>
+              Ficha Técnica
+            </a>
+            <a
+              href={product.pdfs.fichaSeguridad}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center gap-3 text-sm text-neutral-700 hover:text-neutral-900 transition-colors"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-4 h-4 shrink-0 text-neutral-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"
+                ></path>
+              </svg>
+              Ficha de Seguridad
+            </a>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <div class="mt-12">
+      <div class="container mx-auto px-6">
+        <div
+          class="border w-max p-8 rounded-xl bg-neutral-900 text-white space-y-8"
+        >
+          <div class="flex flex-col gap-2 max-w-lg">
+            <h2 class="text-3xl font-bold leading-tight tracking-tight">
+              ¿Te interesa este producto?
+            </h2>
+            <p class="text-neutral-50 leading-relaxed">
+              Contactanos y un asesor te responderá a la brevedad con toda la
+              información que necesitás.
+            </p>
+          </div>
+          <a
+            href="/contacto"
+            class="inline-flex items-center gap-2 bg-neutral-50 text-neutral-900 text-sm font-medium px-6 py-3 rounded-lg hover:bg-neutral-100 transition-colors duration-500"
+          >
+            Contactar
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,25 +1,13 @@
 ---
-const products = [
-  {
-    number: "01",
-    name: "Amoniaco Anhidro",
-    description:
-      "Comercialización de Amoniaco Anhidro a granel, sus subproductos y servicios derivados para el mercado nacional e internacional.",
-  },
-  {
-    number: "02",
-    name: "Transporte de Cargas Peligrosas",
-    description:
-      "Más de 60 años de trayectoria en el transporte seguro y eficiente de sustancias peligrosas en todo el territorio.",
-  },
-];
+import ProductCard from "./ProductCard.astro";
+import { products } from "../../data/products";
 ---
 
 <section
   data-products-section
   class="py-24 bg-neutral-700 text-white overflow-hidden"
 >
-  <div class="container mx-auto px-6">
+  <div class="container mx-auto md:px-0 px-8">
     <!-- Section header -->
     <div class="mb-20 flex flex-col gap-6">
       <div class="flex flex-col gap-4">
@@ -48,33 +36,7 @@ const products = [
 
     <!-- Products grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6">
-      {
-        products.map((product) => (
-          <article data-product-card class="group flex flex-col gap-6">
-            <div
-              data-product-image
-              class="w-full aspect-[3/2] bg-neutral-800 rounded-lg overflow-hidden relative"
-            >
-              <div class="absolute inset-0 bg-gradient-to-t from-neutral-950/60 to-transparent" />
-            </div>
-
-            <div class="flex flex-col gap-3 pb-8 border-b border-neutral-800">
-              <h3
-                data-product-name
-                class="text-2xl font-semibold leading-tight"
-              >
-                {product.name}
-              </h3>
-              <p
-                data-product-desc
-                class="text-sm text-neutral-400 leading-relaxed text-balance"
-              >
-                {product.description}
-              </p>
-            </div>
-          </article>
-        ))
-      }
+      {products.map((product) => <ProductCard product={product} />)}
     </div>
   </div>
 </section>

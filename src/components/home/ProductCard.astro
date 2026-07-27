@@ -1,0 +1,37 @@
+---
+import type { Product } from "../../types/product";
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+---
+
+<a
+  href={`/producto/${product.slug}`}
+  data-product-card
+  class="group flex flex-col gap-6"
+>
+  <div
+    data-product-image
+    class="w-full aspect-[3/2] bg-neutral-800 rounded-lg overflow-hidden relative"
+  >
+    <div
+      class="absolute inset-0 bg-linear-to-t from-neutral-950/60 to-transparent"
+    >
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-3 pb-8 border-b border-neutral-800">
+    <h3 data-product-name class="text-2xl font-semibold leading-tight">
+      {product.name}
+    </h3>
+    <p
+      data-product-desc
+      class="text-sm text-neutral-400 leading-relaxed text-balance"
+    >
+      {product.tagline}
+    </p>
+  </div>
+</a>
