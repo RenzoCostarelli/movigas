@@ -1,0 +1,240 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const internos = [
+  { ext: "#111", desc: "Gestiones bancarias y cobranzas." },
+  {
+    ext: "#112",
+    desc: "Logística y transporte nacional e internacional.",
+  },
+  {
+    ext: "#113",
+    desc: "Atención y pago a proveedores. Lun, Miér. y Vie. 9 a 12 hs.",
+  },
+  { ext: "#114", desc: "Administración Contable y RRHH." },
+  {
+    ext: "#116",
+    desc: "Amoníaco y solución amoniacal. Mercado Interno y Mercosur. Comercio Exterior.",
+  },
+  { ext: "#130", desc: "Administración. Lun-Vie. 9 a 15 hs." },
+];
+---
+
+<Layout title="Contacto · MoviGas" footerHideNav={true}>
+  <section class="bg-neutral-50 text-neutral-900 min-h-screen py-24 px-6">
+    <div class="container mx-auto">
+      <div class="mb-16">
+        <h1 class="text-4xl md:text-6xl font-bold mt-3 max-w-xl leading-tight">
+          Contacto
+        </h1>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 xl:gap-24">
+        <div class="flex flex-col gap-10">
+          <div>
+            <h2 class="text-xs font-semibold uppercase tracking-widest mb-3">
+              Dónde estamos
+            </h2>
+            <p class="text-neutral-800 text-sm leading-relaxed">
+              Av. Pres. Perón 6855<br />
+              2000 Rosario, Santa Fe
+            </p>
+          </div>
+
+          <div class="w-full h-px bg-neutral-500"></div>
+
+          <div>
+            <h2 class="text-xs font-semibold uppercase tracking-widest mb-3">
+              Contacto comercial
+            </h2>
+            <p class="text-neutral-800 text-sm mb-1">info@movigas.com.ar</p>
+            <p class="text-neutral-800 text-sm">Cel. +54 341 5 070 416</p>
+          </div>
+
+          <div class="w-full h-px bg-neutral-500"></div>
+
+          <div>
+            <h2 class="text-xs font-semibold uppercase tracking-widest mb-3">
+              Logística y transporte
+            </h2>
+            <p class="text-neutral-800 text-sm mb-1">
+              logistica@movigas.com.ar
+            </p>
+            <p class="text-neutral-800 text-sm">Cel. +54 9 11 56127747</p>
+          </div>
+
+          <div class="w-full h-px bg-neutral-500"></div>
+
+          <div>
+            <h2 class="text-xs font-semibold uppercase tracking-widest mb-1">
+              Nuestros internos
+            </h2>
+            <p class="text-xs mb-4">
+              Tel. +54 9 3415 21-4994 · Líneas rotativas
+            </p>
+            <ul class="flex flex-col gap-3">
+              {
+                internos.map((item) => (
+                  <li class="flex items-start gap-4 border-b border-neutral-800 pb-3 last:border-0">
+                    <span class="text-xs font-mono text-red-500 shrink-0 mt-0.5 w-8">
+                      {item.ext}
+                    </span>
+                    <span class="text-sm text-neutral-600">{item.desc}</span>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+
+          <div class="w-full h-px bg-neutral-500"></div>
+
+          <div>
+            <h2 class="text-xs font-semibold uppercase tracking-widest mb-3">
+              Atención y pago a proveedores
+            </h2>
+            <p class="text-neutral-800 text-sm">Proveedores@movigas.com.ar</p>
+          </div>
+        </div>
+
+        <div class="self-start">
+          <h2 class="text-xl font-semibold mb-8 text-neutral-900">
+            Dejanos tu consulta
+          </h2>
+
+          <form data-contact-form class="flex flex-col gap-5" novalidate>
+            <div class="flex flex-col gap-2">
+              <label for="nombre" class="text-xs uppercase tracking-widest">
+                Nombre y Apellido
+              </label>
+              <input
+                id="nombre"
+                type="text"
+                name="nombre"
+                required
+                placeholder="Juan García"
+                class="w-full bg-neutral-100 border border-neutral-300 rounded-md px-4 py-3 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-red-500 transition-colors"
+              />
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label for="email" class="text-xs uppercase tracking-widest">
+                Email
+              </label>
+              <input
+                id="email"
+                type="email"
+                name="email"
+                required
+                placeholder="juan@empresa.com"
+                class="w-full bg-neutral-100 border border-neutral-300 rounded-md px-4 py-3 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-red-500 transition-colors"
+              />
+            </div>
+
+            <!-- Teléfono -->
+            <div class="flex flex-col gap-2">
+              <label for="telefono" class="text-xs uppercase tracking-widest">
+                Teléfono
+              </label>
+              <input
+                id="telefono"
+                type="tel"
+                name="telefono"
+                placeholder="+54 341 000 0000"
+                class="w-full bg-neutral-100 border border-neutral-300 rounded-md px-4 py-3 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-red-500 transition-colors"
+              />
+            </div>
+
+            <!-- Asunto -->
+            <div class="flex flex-col gap-2">
+              <label for="asunto" class="text-xs uppercase tracking-widest">
+                Asunto
+              </label>
+              <input
+                id="asunto"
+                type="text"
+                name="asunto"
+                required
+                placeholder="Consulta comercial"
+                class="w-full bg-neutral-100 border border-neutral-300 rounded-md px-4 py-3 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-red-500 transition-colors"
+              />
+            </div>
+
+            <!-- Mensaje -->
+            <div class="flex flex-col gap-2">
+              <label for="mensaje" class="text-xs uppercase tracking-widest">
+                Mensaje
+              </label>
+              <textarea
+                id="mensaje"
+                name="mensaje"
+                required
+                rows="5"
+                placeholder="Escribí tu consulta aquí..."
+                class="w-full bg-neutral-100 border border-neutral-300 rounded-md px-4 py-3 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-red-500 transition-colors resize-none"
+              ></textarea>
+            </div>
+
+            <!-- Submit -->
+            <button
+              type="submit"
+              data-submit-btn
+              class="mt-2 w-full bg-red-600 hover:bg-red-700 active:bg-red-800 text-white text-sm font-semibold uppercase tracking-widest py-4 rounded-lg transition-colors"
+            >
+              Enviar
+            </button>
+
+            <!-- Feedback message -->
+            <p data-form-feedback class="text-sm text-center hidden"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="py-12 w-full h-screen">
+      <div
+        class="w-full h-full bg-neutral-300 rounded-xl flex items-center justify-center"
+      >
+        <div class="">
+          <div class="text-black font-bold">Mapa</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const form = document.querySelector("[data-contact-form]") as HTMLFormElement;
+  const feedback = document.querySelector(
+    "[data-form-feedback]",
+  ) as HTMLElement;
+  const submitBtn = document.querySelector(
+    "[data-submit-btn]",
+  ) as HTMLButtonElement;
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Enviando...";
+
+    // Simulate async submit — replace with real endpoint when ready
+    setTimeout(() => {
+      submitBtn.textContent = "Enviado";
+      feedback.textContent =
+        "Tu mensaje fue enviado correctamente. Te contactaremos a la brevedad.";
+      feedback.classList.remove("hidden", "text-red-400");
+      feedback.classList.add("text-green-400");
+      form.reset();
+
+      setTimeout(() => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Enviar";
+        feedback.classList.add("hidden");
+      }, 5000);
+    }, 1000);
+  });
+</script>

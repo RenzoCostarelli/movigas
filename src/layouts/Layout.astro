@@ -1,6 +1,14 @@
 ---
 import "../styles/global.css";
-import Navbar from "../components/Navbar.astro";
+import Navbar from "../components/ui/Navbar.astro";
+import Footer from "../components/ui/Footer.astro";
+
+interface Props {
+  title?: string;
+  footerHideNav?: boolean;
+}
+
+const { title = "MoviGas", footerHideNav = false } = Astro.props;
 ---
 
 <html lang="es">
@@ -10,13 +18,14 @@ import Navbar from "../components/Navbar.astro";
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>MoviGas</title>
+    <title>{title}</title>
   </head>
   <body>
     <Navbar />
     <main>
       <slot />
     </main>
+    <Footer hideNav={footerHideNav} />
     <script>
       import { initLenis } from "../lib/lenis";
       initLenis();

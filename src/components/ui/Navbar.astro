@@ -1,0 +1,182 @@
+---
+import { navItems } from "../../data/navItems";
+---
+
+<header
+  data-navbar
+  class="sticky top-0 left-0 right-0 z-50 py-5 px-8 text-neutral-700"
+>
+  <nav class="flex items-center justify-between container mx-auto">
+    <!-- Logo -->
+    <a
+      data-navbar-logo
+      href="#"
+      class="text-xl font-bold tracking-tight text-neutral-900 z-50 relative"
+    >
+      MoviGas
+    </a>
+
+    <!-- Desktop: Nav links + Social icons -->
+    <div class="hidden md:flex items-center gap-10">
+      <!-- Navigation Links -->
+      <ul class="flex items-center gap-8">
+        {navItems.map((item) => (
+          <li>
+            <a href={item.href} class="nav-link text-sm font-bold hover:text-red-900 transition-colors">
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <!-- Divider -->
+      <div class="w-px h-4 bg-neutral-300"></div>
+
+      <!-- Social Icons -->
+      <div class="flex items-center gap-4">
+        <!-- Instagram -->
+        <a href="#" class="social-icon text-inherit hover:text-neutral-900 transition-colors" aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>
+        </a>
+
+        <!-- Facebook -->
+        <a href="#" class="social-icon text-inherit hover:text-neutral-900 transition-colors" aria-label="Facebook">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+          </svg>
+        </a>
+
+        <!-- Twitter / X -->
+        <a href="#" class="social-icon text-inherit hover:text-neutral-900 transition-colors" aria-label="Twitter">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Mobile: Hamburger button -->
+    <button
+      data-menu-toggle
+      aria-label="Abrir menú"
+      aria-expanded="false"
+      class="md:hidden relative z-50 flex flex-col justify-center items-center w-8 h-8 gap-1.5"
+    >
+      <span data-bar-1 class="block w-6 h-0.5 bg-neutral-900 transition-all duration-300 origin-center"></span>
+      <span data-bar-2 class="block w-6 h-0.5 bg-neutral-900 transition-all duration-300"></span>
+      <span data-bar-3 class="block w-6 h-0.5 bg-neutral-900 transition-all duration-300 origin-center"></span>
+    </button>
+  </nav>
+
+  <!-- Mobile menu overlay -->
+  <div
+    data-mobile-menu
+    class="md:hidden fixed inset-0 bg-white z-40 flex flex-col justify-center px-8 opacity-0 pointer-events-none transition-opacity duration-300"
+  >
+    <ul class="flex flex-col gap-8 mb-12">
+      {navItems.map((item) => (
+        <li>
+          <a data-mobile-link href={item.href} class="text-3xl font-bold text-neutral-900 hover:text-red-900 transition-colors">
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="border-t border-neutral-200 pt-8">
+      <p class="text-xs text-neutral-400 uppercase tracking-widest mb-4">Seguinos</p>
+      <div class="flex items-center gap-6">
+        <a href="#" aria-label="Instagram" class="text-neutral-500 hover:text-neutral-900 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>
+        </a>
+        <a href="#" aria-label="Facebook" class="text-neutral-500 hover:text-neutral-900 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+          </svg>
+        </a>
+        <a href="#" aria-label="Twitter" class="text-neutral-500 hover:text-neutral-900 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+          </svg>
+        </a>
+      </div>
+
+      <p class="text-sm text-neutral-400 mt-8">
+        +54 (11) 4321-0000
+      </p>
+      <p class="text-sm text-neutral-400">info@movigas.com.ar</p>
+    </div>
+  </div>
+</header>
+
+<script>
+  import { gsap } from "../../lib/gsap";
+
+  const toggle = document.querySelector("[data-menu-toggle]") as HTMLButtonElement;
+  const menu = document.querySelector("[data-mobile-menu]") as HTMLElement;
+  const bar1 = document.querySelector("[data-bar-1]") as HTMLElement;
+  const bar2 = document.querySelector("[data-bar-2]") as HTMLElement;
+  const bar3 = document.querySelector("[data-bar-3]") as HTMLElement;
+  const mobileLinks = document.querySelectorAll("[data-mobile-link]");
+
+  let isOpen = false;
+
+  function openMenu() {
+    isOpen = true;
+    toggle.setAttribute("aria-expanded", "true");
+    menu.classList.remove("pointer-events-none");
+
+    gsap.to(menu, { opacity: 1, duration: 0.3, ease: "power2.out" });
+    gsap.to(mobileLinks, {
+      opacity: 1,
+      y: 0,
+      duration: 0.4,
+      stagger: 0.07,
+      ease: "power3.out",
+      delay: 0.1,
+    });
+
+    // Animate hamburger → X
+    gsap.to(bar1, { rotate: 45, y: 8, duration: 0.3, ease: "power2.out" });
+    gsap.to(bar2, { opacity: 0, duration: 0.15 });
+    gsap.to(bar3, { rotate: -45, y: -8, duration: 0.3, ease: "power2.out" });
+  }
+
+  function closeMenu() {
+    isOpen = false;
+    toggle.setAttribute("aria-expanded", "false");
+
+    gsap.to(menu, {
+      opacity: 0,
+      duration: 0.25,
+      ease: "power2.in",
+      onComplete: () => menu.classList.add("pointer-events-none"),
+    });
+
+    // Animate X → hamburger
+    gsap.to(bar1, { rotate: 0, y: 0, duration: 0.3, ease: "power2.out" });
+    gsap.to(bar2, { opacity: 1, duration: 0.3 });
+    gsap.to(bar3, { rotate: 0, y: 0, duration: 0.3, ease: "power2.out" });
+  }
+
+  // Set initial state for mobile links
+  gsap.set(mobileLinks, { opacity: 0, y: 20 });
+
+  toggle.addEventListener("click", () => {
+    if (isOpen) closeMenu();
+    else openMenu();
+  });
+
+  // Close menu on link click
+  mobileLinks.forEach((link) => {
+    link.addEventListener("click", closeMenu);
+  });
+</script>
