@@ -1,5 +1,6 @@
 ---
 import { navItems } from "../../data/navItems";
+import Logo from "./Logo.astro";
 
 interface Props {
   hideNav?: boolean;
@@ -43,8 +44,8 @@ const extensions = [
     >
       <!-- Col 1: Brand -->
       <div class="flex flex-col gap-5">
-        <a href="/" class="text-white text-2xl font-bold tracking-tight">
-          MoviGas
+        <a href="/" class="text-white">
+          <Logo class="h-8 w-auto" />
         </a>
         <p class="text-sm leading-relaxed">
           Empresa familiar fundada en 1958, dedicada al transporte y

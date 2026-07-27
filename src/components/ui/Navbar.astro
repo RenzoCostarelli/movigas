@@ -1,5 +1,6 @@
 ---
 import { navItems } from "../../data/navItems";
+import Logo from "./Logo.astro";
 ---
 
 <header
@@ -11,9 +12,9 @@ import { navItems } from "../../data/navItems";
     <a
       data-navbar-logo
       href="#"
-      class="text-xl font-bold tracking-tight text-neutral-900 z-50 relative"
+      class="z-50 relative text-neutral-900"
     >
-      MoviGas
+      <Logo class="h-8 w-auto" />
     </a>
 
     <!-- Desktop: Nav links + Social icons -->
