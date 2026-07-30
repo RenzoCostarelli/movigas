@@ -20,32 +20,9 @@
         <p data-about-body class="text-xl text-balance mb-6">
           MOVIGAS S.R.L. comprometida con el medio ambiente, seguridad y salud
           en el trabajo. Cuenta con sistema de gestión de calidad norma
-          internacional ISO 9001: 2015. La dirección de MOVIGAS S.R.L. ha
-          establecido una política fundada en los siguientes compromisos:
+          internacional ISO 9001: 2015.
         </p>
-        <ul class="space-y-3 pl-4">
-          <li data-politics-item class="flex items-center gap-2">
-            <div class="h-3 w-3 aspect-square rounded-full bg-red-700"></div> Servicio
-            de transporte de cargas peligrosas, confiable y seguro
-          </li>
-          <li data-politics-item class="flex items-center gap-2">
-            <div class="h-3 w-3 aspect-square rounded-full bg-red-700">
-            </div>Cumplir con las reglamentaciones legales vigentes
-          </li>
-          <li data-politics-item class="flex items-center gap-2">
-            <div class="h-3 w-3 aspect-square rounded-full bg-red-700"></div>
-            Preservar la salud de los empleados en el ámbito laboral mediante una
-            política de prevención de adicciones.
-          </li>
-          <li data-politics-item class="flex items-center gap-2">
-            <div class="h-3 w-3 aspect-square rounded-full bg-red-700">
-            </div>Programas de formación y capacitación del personal
-          </li>
-          <li data-politics-item class="flex items-center gap-2">
-            <div class="h-3 w-3 aspect-square rounded-full bg-red-700">
-            </div>Prevención de la contaminación ambiental
-          </li>
-        </ul>
+
         <a
           data-politics-cta
           href="/politicas"
@@ -72,9 +49,7 @@
     const bodyEl = section.querySelector("[data-about-body]") as HTMLElement;
     const imageEl = section.querySelector("[data-about-image]") as HTMLElement;
     const items = gsap.utils.toArray<HTMLElement>("[data-politics-item]");
-    const ctaEl = section.querySelector(
-      "[data-politics-cta]",
-    ) as HTMLElement;
+    const ctaEl = section.querySelector("[data-politics-cta]") as HTMLElement;
 
     const splitHeading = new SplitText(headingEl, { type: "words" });
     const splitBody = new SplitText(bodyEl, { type: "lines" });
@@ -120,7 +95,11 @@
         },
         "-=0.2",
       )
-      .to(ctaEl, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, "-=0.1");
+      .to(
+        ctaEl,
+        { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" },
+        "-=0.1",
+      );
 
     ScrollTrigger.create({
       trigger: section,
