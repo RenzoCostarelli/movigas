@@ -2,7 +2,7 @@
 
 ---
 
-<section data-about-section class="pb-12">
+<section data-politics-section class="pb-12">
   <div class="container mx-auto h-full md:px-0 px-8">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-32 h-full">
       <div
@@ -11,20 +11,43 @@
       >
       </div>
       <div class="flex justify-center flex-col">
-        <h2 data-about-heading class="text-5xl font-bold mb-4 text-neutral-600">
+        <h2 data-about-heading class="text-5xl font-bold mb-2 text-neutral-600">
           Politicas
         </h2>
-        <p data-about-body class="text-xl text-balance">
-          MOVIGAS S.R.L. establece como política el compromiso asumido con la
-          Calidad Medio Ambiente Seguridad y Salud en el Trabajo. Ha
-          desarrollado un Sistema de Gestión de Calidad basado en la norma
-          internacional ISO 9001: 2015; con el compromiso de alcanzar la
-          satisfacción de los clientes para lo cual determina la aplicación de
-          todos los recursos disponibles para implementar y hacer cumplir el
-          Sistema de Gestión de Calidad basado en la filosofía de la Mejora
-          Continua.
+        <p class="text-xs mb-6">
+          AUDITORÍA DE RENOVACIÓN CERTIFICACIÓN ISO 9001:2015
         </p>
+        <p data-about-body class="text-xl text-balance mb-6">
+          MOVIGAS S.R.L. comprometida con el medio ambiente, seguridad y salud
+          en el trabajo. Cuenta con sistema de gestión de calidad norma
+          internacional ISO 9001: 2015. La dirección de MOVIGAS S.R.L. ha
+          establecido una política fundada en los siguientes compromisos:
+        </p>
+        <ul class="space-y-3 pl-4">
+          <li data-politics-item class="flex items-center gap-2">
+            <div class="h-3 w-3 aspect-square rounded-full bg-red-700"></div> Servicio
+            de transporte de cargas peligrosas, confiable y seguro
+          </li>
+          <li data-politics-item class="flex items-center gap-2">
+            <div class="h-3 w-3 aspect-square rounded-full bg-red-700">
+            </div>Cumplir con las reglamentaciones legales vigentes
+          </li>
+          <li data-politics-item class="flex items-center gap-2">
+            <div class="h-3 w-3 aspect-square rounded-full bg-red-700"></div>
+            Preservar la salud de los empleados en el ámbito laboral mediante una
+            política de prevención de adicciones.
+          </li>
+          <li data-politics-item class="flex items-center gap-2">
+            <div class="h-3 w-3 aspect-square rounded-full bg-red-700">
+            </div>Programas de formación y capacitación del personal
+          </li>
+          <li data-politics-item class="flex items-center gap-2">
+            <div class="h-3 w-3 aspect-square rounded-full bg-red-700">
+            </div>Prevención de la contaminación ambiental
+          </li>
+        </ul>
         <a
+          data-politics-cta
           href="/politicas"
           class="mt-6 inline-block bg-neutral-50 border border-neutral-900 text-sm px-6 py-3 w-max font-bold text-neutral-950 hover:text-red-700 transition-colors"
         >
@@ -34,3 +57,77 @@
     </div>
   </div>
 </section>
+
+<script>
+  import { gsap, ScrollTrigger, SplitText } from "../../lib/gsap";
+
+  const section = document.querySelector(
+    "[data-politics-section]",
+  ) as HTMLElement;
+
+  gsap.context(() => {
+    const headingEl = section.querySelector(
+      "[data-about-heading]",
+    ) as HTMLElement;
+    const bodyEl = section.querySelector("[data-about-body]") as HTMLElement;
+    const imageEl = section.querySelector("[data-about-image]") as HTMLElement;
+    const items = gsap.utils.toArray<HTMLElement>("[data-politics-item]");
+    const ctaEl = section.querySelector(
+      "[data-politics-cta]",
+    ) as HTMLElement;
+
+    const splitHeading = new SplitText(headingEl, { type: "words" });
+    const splitBody = new SplitText(bodyEl, { type: "lines" });
+
+    gsap.set(imageEl, { opacity: 0, x: -24 });
+    gsap.set(splitHeading.words, { opacity: 0, y: 20 });
+    gsap.set(splitBody.lines, { opacity: 0 });
+    gsap.set(items, { opacity: 0, x: 16 });
+    gsap.set(ctaEl, { opacity: 0, y: 8 });
+
+    const tl = gsap.timeline({ paused: true });
+
+    tl.to(imageEl, { opacity: 1, x: 0, duration: 1, ease: "power3.out" })
+      .to(
+        splitHeading.words,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          stagger: 0.05,
+          ease: "power3.out",
+        },
+        "<",
+      )
+      .to(
+        splitBody.lines,
+        {
+          opacity: 1,
+          duration: 0.5,
+          stagger: 0.08,
+          ease: "power2.out",
+        },
+        "-=0.2",
+      )
+      .to(
+        items,
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.4,
+          stagger: 0.08,
+          ease: "power2.out",
+        },
+        "-=0.2",
+      )
+      .to(ctaEl, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, "-=0.1");
+
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top 70%",
+      end: "center center",
+      animation: tl,
+      scrub: true,
+    });
+  }, section);
+</script>

@@ -28,9 +28,9 @@ import { products } from "../../data/products";
         data-products-subtitle
         class="text-base text-neutral-400 leading-relaxed max-w-xl md:mb-2 text-balance"
       >
-        Desde el transporte de cargas peligrosas hasta la comercialización de
-        Amoniaco Anhidro, brindamos soluciones integrales con más de seis
-        décadas de trayectoria en el mercado nacional e internacional.
+        Abastecemos y brindamos soluciones a distintas industrias químicas,
+        alimenticias y agroindustriales; comercializando y distribuyendo
+        Amoníaco anhídro a granel y agua amoniacal.
       </p>
     </div>
 
@@ -48,145 +48,150 @@ import { products } from "../../data/products";
     "[data-products-section]",
   ) as HTMLElement;
 
-  // gsap.context(() => {
-  //   // --- Split text elements ---
-  //   const splitHeading = new SplitText("[data-products-heading]", {
-  //     type: "chars,words",
-  //   });
-  //   const splitLabel = new SplitText("[data-products-label]", {
-  //     type: "chars",
-  //   });
-  //   const splitSubtitle = new SplitText("[data-products-subtitle]", {
-  //     type: "lines",
-  //   });
-  //   const productNames = document.querySelectorAll("[data-product-name]");
-  //   const splitNames = Array.from(productNames).map(
-  //     (el) => new SplitText(el, { type: "lines" }),
-  //   );
-  //   const productDescs = document.querySelectorAll("[data-product-desc]");
-  //   const splitDescs = Array.from(productDescs).map(
-  //     (el) => new SplitText(el, { type: "lines" }),
-  //   );
+  gsap.context(() => {
+    // --- Split text elements ---
+    const headingEl = section.querySelector(
+      "[data-products-heading]",
+    ) as HTMLElement;
+    const labelEl = section.querySelector(
+      "[data-products-label]",
+    ) as HTMLElement;
+    const subtitleEl = section.querySelector(
+      "[data-products-subtitle]",
+    ) as HTMLElement;
 
-  //   // --- Initial states ---
-  //   gsap.set(splitLabel.chars, { opacity: 0, y: 8 });
-  //   gsap.set(splitHeading.chars, { opacity: 0, y: 40, rotateX: -15 });
-  //   gsap.set(splitSubtitle.lines, { opacity: 0, y: 12 });
-  //   gsap.set("[data-product-card]", { opacity: 0, y: 60 });
-  //   gsap.set("[data-product-image]", { scale: 1.05 });
-  //   splitNames.forEach((s) => gsap.set(s.lines, { opacity: 0, y: 16 }));
-  //   splitDescs.forEach((s) => gsap.set(s.lines, { opacity: 0 }));
-  //   gsap.set("[data-product-number]", { opacity: 0 });
+    const splitHeading = new SplitText(headingEl, { type: "chars,words" });
+    const splitLabel = new SplitText(labelEl, { type: "chars" });
+    const splitSubtitle = new SplitText(subtitleEl, { type: "lines" });
 
-  //   // --- Header timeline ---
-  //   const tlHeader = gsap.timeline({ paused: true });
+    const productNames = section.querySelectorAll("[data-product-name]");
+    const splitNames = Array.from(productNames).map(
+      (el) => new SplitText(el as HTMLElement, { type: "lines" }),
+    );
+    const productDescs = section.querySelectorAll("[data-product-desc]");
+    const splitDescs = Array.from(productDescs).map(
+      (el) => new SplitText(el as HTMLElement, { type: "lines" }),
+    );
 
-  //   tlHeader
-  //     .to(splitLabel.chars, {
-  //       opacity: 1,
-  //       y: 0,
-  //       duration: 0.6,
-  //       stagger: 0.015,
-  //       ease: "power2.out",
-  //     })
-  //     .to(
-  //       splitHeading.chars,
-  //       {
-  //         opacity: 1,
-  //         y: 0,
-  //         rotateX: 0,
-  //         duration: 0.8,
-  //         stagger: 0.02,
-  //         ease: "power3.out",
-  //       },
-  //       "-=0.3",
-  //     )
-  //     .to(
-  //       splitSubtitle.lines,
-  //       {
-  //         opacity: 1,
-  //         y: 0,
-  //         duration: 0.7,
-  //         stagger: 0.1,
-  //         ease: "power2.out",
-  //       },
-  //       "-=0.4",
-  //     );
+    // --- Initial states ---
+    gsap.set(splitLabel.chars, { opacity: 0, y: 8 });
+    gsap.set(splitHeading.chars, { opacity: 0, y: 40, rotateX: -15 });
+    gsap.set(splitSubtitle.lines, { opacity: 0, y: 12 });
+    gsap.set("[data-product-card]", { opacity: 0, y: 60 });
+    gsap.set("[data-product-image]", { scale: 1.05 });
+    splitNames.forEach((s) => gsap.set(s.lines, { opacity: 0, y: 16 }));
+    splitDescs.forEach((s) => gsap.set(s.lines, { opacity: 0 }));
+    gsap.set("[data-product-number]", { opacity: 0 });
 
-  //   ScrollTrigger.create({
-  //     trigger: section,
-  //     start: "top 75%",
-  //     end: "top 30%",
-  //     animation: tlHeader,
-  //     scrub: true,
-  //   });
+    // --- Header timeline ---
+    const tlHeader = gsap.timeline({ paused: true });
 
-  //   // --- Cards timeline ---
-  //   const tlCards = gsap.timeline({ paused: true });
+    tlHeader
+      .to(splitLabel.chars, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        stagger: 0.015,
+        ease: "power2.out",
+      })
+      .to(
+        splitHeading.chars,
+        {
+          opacity: 1,
+          y: 0,
+          rotateX: 0,
+          duration: 0.8,
+          stagger: 0.02,
+          ease: "power3.out",
+        },
+        "-=0.3",
+      )
+      .to(
+        splitSubtitle.lines,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          stagger: 0.1,
+          ease: "power2.out",
+        },
+        "-=0.4",
+      );
 
-  //   tlCards.to("[data-product-card]", {
-  //     opacity: 1,
-  //     y: 0,
-  //     duration: 1,
-  //     stagger: 0.15,
-  //     ease: "power3.out",
-  //   });
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top 75%",
+      end: "top 30%",
+      animation: tlHeader,
+      scrub: true,
+    });
 
-  //   tlCards.to(
-  //     "[data-product-image]",
-  //     {
-  //       scale: 1,
-  //       duration: 1.2,
-  //       stagger: 0.15,
-  //       ease: "power3.out",
-  //     },
-  //     "<",
-  //   );
+    // --- Cards timeline ---
+    const tlCards = gsap.timeline({ paused: true });
 
-  //   tlCards.to(
-  //     "[data-product-number]",
-  //     {
-  //       opacity: 1,
-  //       duration: 0.4,
-  //       stagger: 0.15,
-  //       ease: "power2.out",
-  //     },
-  //     "-=0.6",
-  //   );
+    tlCards.to("[data-product-card]", {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      stagger: 0.15,
+      ease: "power3.out",
+    });
 
-  //   splitNames.forEach((s, i) => {
-  //     tlCards.to(
-  //       s.lines,
-  //       {
-  //         opacity: 1,
-  //         y: 0,
-  //         duration: 0.5,
-  //         stagger: 0.08,
-  //         ease: "power2.out",
-  //       },
-  //       `-=${0.5 - i * 0.05}`,
-  //     );
-  //   });
+    tlCards.to(
+      "[data-product-image]",
+      {
+        scale: 1,
+        duration: 1.2,
+        stagger: 0.15,
+        ease: "power3.out",
+      },
+      "<",
+    );
 
-  //   splitDescs.forEach((s, i) => {
-  //     tlCards.to(
-  //       s.lines,
-  //       {
-  //         opacity: 1,
-  //         duration: 0.5,
-  //         stagger: 0.06,
-  //         ease: "power2.out",
-  //       },
-  //       `-=${0.4 - i * 0.05}`,
-  //     );
-  //   });
+    tlCards.to(
+      "[data-product-number]",
+      {
+        opacity: 1,
+        duration: 0.4,
+        stagger: 0.15,
+        ease: "power2.out",
+      },
+      "-=0.6",
+    );
 
-  //   ScrollTrigger.create({
-  //     trigger: "[data-product-card]",
-  //     start: "top 80%",
-  //     end: "bottom 40%",
-  //     animation: tlCards,
-  //     scrub: true,
-  //   });
-  // }, section);
+    splitNames.forEach((s, i) => {
+      tlCards.to(
+        s.lines,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          stagger: 0.08,
+          ease: "power2.out",
+        },
+        `-=${0.5 - i * 0.05}`,
+      );
+    });
+
+    splitDescs.forEach((s, i) => {
+      tlCards.to(
+        s.lines,
+        {
+          opacity: 1,
+          duration: 0.5,
+          stagger: 0.06,
+          ease: "power2.out",
+        },
+        `-=${0.4 - i * 0.05}`,
+      );
+    });
+
+    ScrollTrigger.create({
+      trigger: "[data-product-card]",
+      start: "top 80%",
+      end: "bottom 40%",
+      animation: tlCards,
+      scrub: true,
+    });
+  }, section);
 </script>

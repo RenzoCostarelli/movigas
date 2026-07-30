@@ -52,6 +52,23 @@ const thumbs = [
         ))
       }
     </div>
+    <h2
+      data-services-heading
+      class="text-center font-bold text-3xl md:text-5xl leading-[1.05] tracking-tight mb-4 mt-8"
+    >
+      Conductores y Operadores
+    </h2>
+    <div class="max-w-2xl mx-auto text-left">
+      <p
+        data-services-body
+        class="text-base text-center text-neutral-600 leading-relaxed text-pretty"
+      >
+        El plantel de choferes posee los conocimientos, capacitaciones, exámenes
+        psicofísicos y habilitaciones solicitadas para el transporte de cargas
+        peligrosas y generales exigidos y requeridos por cada una de las
+        distintas actividades desarrolladas.
+      </p>
+    </div>
   </div>
 </section>
 
@@ -64,3 +81,113 @@ const thumbs = [
     display: none;
   }
 </style>
+
+<script>
+  import { gsap, ScrollTrigger, SplitText } from "../../lib/gsap";
+
+  const section = document.querySelector(
+    "[data-services-section]",
+  ) as HTMLElement;
+
+  gsap.context(() => {
+    const headings = gsap.utils.toArray<HTMLElement>("[data-services-heading]");
+    const bodies = gsap.utils.toArray<HTMLElement>("[data-services-body]");
+    const thumbs = gsap.utils.toArray<HTMLElement>("[data-services-thumb]");
+    const carouselEl = section.querySelector(
+      "[data-transport-carousel]",
+    ) as HTMLElement;
+
+    const splitHeading = new SplitText(headings[0], { type: "chars,words" });
+    const splitBody = new SplitText(bodies[0], { type: "lines" });
+    const splitHeading2 = new SplitText(headings[1], { type: "words" });
+    const splitBody2 = new SplitText(bodies[1], { type: "lines" });
+
+    // --- Initial states ---
+    gsap.set(splitHeading.chars, { opacity: 0, y: 30, rotateX: -15 });
+    gsap.set(splitBody.lines, { opacity: 0, y: 12 });
+    gsap.set(thumbs, { opacity: 0, y: 40 });
+    gsap.set(splitHeading2.words, { opacity: 0, y: 20 });
+    gsap.set(splitBody2.lines, { opacity: 0 });
+
+    // --- Header timeline ---
+    const tlHeader = gsap.timeline({ paused: true });
+
+    tlHeader
+      .to(splitHeading.chars, {
+        opacity: 1,
+        y: 0,
+        rotateX: 0,
+        duration: 0.8,
+        stagger: 0.02,
+        ease: "power3.out",
+      })
+      .to(
+        splitBody.lines,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          stagger: 0.08,
+          ease: "power2.out",
+        },
+        "-=0.3",
+      );
+
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top 75%",
+      end: "top 25%",
+      animation: tlHeader,
+      scrub: true,
+    });
+
+    // --- Carousel timeline ---
+    const tlCarousel = gsap.timeline({ paused: true });
+
+    tlCarousel.to(thumbs, {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: "power3.out",
+    });
+
+    ScrollTrigger.create({
+      trigger: carouselEl,
+      start: "top 80%",
+      end: "top 30%",
+      animation: tlCarousel,
+      scrub: true,
+    });
+
+    // --- Secondary content timeline ---
+    const tlSecondary = gsap.timeline({ paused: true });
+
+    tlSecondary
+      .to(splitHeading2.words, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        stagger: 0.05,
+        ease: "power3.out",
+      })
+      .to(
+        splitBody2.lines,
+        {
+          opacity: 1,
+          duration: 0.5,
+          stagger: 0.08,
+          ease: "power2.out",
+        },
+        "-=0.2",
+      );
+
+    ScrollTrigger.create({
+      trigger: headings[1],
+      start: "top 80%",
+      end: "top 30%",
+      animation: tlSecondary,
+      scrub: true,
+    });
+  }, section);
+</script>

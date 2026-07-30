@@ -47,35 +47,35 @@
     "[data-hero-container]",
   ) as HTMLElement;
 
-  // gsap.context(() => {
-  //   const split = new SplitText("[data-hero-text]", {
-  //     type: "chars,words,lines",
-  //   });
+  gsap.context(() => {
+    const heroTextEl = container.querySelector(
+      "[data-hero-text]",
+    ) as HTMLElement;
+    const split = new SplitText(heroTextEl, { type: "chars,words" });
 
-  //   const containerDuration = 1.2;
-  //   const textDelay = containerDuration - 0.5;
+    const containerDuration = 1.2;
+    const textDelay = containerDuration - 0.5;
 
-  //   // Set all initial states synchronously before any paint to prevent scroll jumps
-  //   gsap.set(container, { autoAlpha: 0 });
-  //   gsap.set(split.chars, { opacity: 0, y: 20 });
+    gsap.set(container, { autoAlpha: 0, scale: 0.97 });
+    gsap.set(split.chars, { opacity: 0, y: 20 });
 
-  //   const tl = gsap.timeline();
+    const tl = gsap.timeline();
 
-  //   tl.to(container, {
-  //     scale: 1,
-  //     autoAlpha: 1,
-  //     duration: containerDuration,
-  //     ease: "power3.out",
-  //   }).to(
-  //     split.chars,
-  //     {
-  //       opacity: 1,
-  //       y: 0,
-  //       duration: 0.6,
-  //       stagger: 0.02,
-  //       ease: "power2.out",
-  //     },
-  //     textDelay,
-  //   );
-  // }, container);
+    tl.to(container, {
+      scale: 1,
+      autoAlpha: 1,
+      duration: containerDuration,
+      ease: "power3.out",
+    }).to(
+      split.chars,
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        stagger: 0.02,
+        ease: "power2.out",
+      },
+      textDelay,
+    );
+  }, container);
 </script>
