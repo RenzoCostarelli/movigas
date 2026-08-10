@@ -1,0 +1,21 @@
+---
+interface Props {
+  count: number;
+}
+
+const { count } = Astro.props;
+---
+
+<div data-slider-dots class="flex gap-2 items-center justify-center py-3">
+  {
+    Array.from({ length: count }).map((_, i) => (
+      <button
+        data-dot={i}
+        aria-label={`Ir a imagen ${i + 1}`}
+        class={`h-2 rounded-full transition-all duration-500 ease-in-out cursor-pointer ${
+          i === 0 ? "w-8 bg-white" : "w-2 bg-white/50"
+        }`}
+      />
+    ))
+  }
+</div>

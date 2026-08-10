@@ -1,4 +1,4 @@
-<div class="h-[80svh] md:h-svh px-4">
+<div class="h-[80svh] md:h-[90svh] px-4">
   <div
     data-hero-container
     class="relative rounded-xl shadow-xl bg-neutral-200 flex flex-col items-center justify-center h-full gap-4 overflow-hidden"
@@ -30,52 +30,61 @@
             día a día en conseguir la mejor calidad
           </p>
         </div>
-        <!-- <div>
-          <div class="bg-white px-8 py-3 text-neutral-900 font-semibold">
-            Ver Servicios
-          </div>
-        </div> -->
+        <div class="flex">
+          <a href="#contacto" class="group">
+            <a href="#productos" class="group">
+              <div
+                class="block relative bg-transparent overflow-hidden transition-colors duration-500 shadow-[-1px_-1px_0.5px_0px_rgba(255,255,255,0.55),1px_1px_0.5px_0px_rgba(255,255,255,0.25)] text-neutral-50 rounded-full px-8 py-3 font-semibold"
+              >
+                <span
+                  class="absolute h-full w-full inset-0 bg-radial from-white blur-xl to-transparent rounded-full opacity-0 group-hover:opacity-40 group-hover:translate-y-5.5 translate-y-7.5 translate-x-16 transition-all duration-500"
+                ></span>
+                <span class="relative">Nuestros Productos </span>
+              </div>
+            </a>
+          </a>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<script>
-  import { gsap, SplitText } from "../../lib/gsap";
+  <script>
+    import { gsap, SplitText } from "../../lib/gsap";
 
-  const container = document.querySelector(
-    "[data-hero-container]",
-  ) as HTMLElement;
-
-  gsap.context(() => {
-    const heroTextEl = container.querySelector(
-      "[data-hero-text]",
+    const container = document.querySelector(
+      "[data-hero-container]",
     ) as HTMLElement;
-    const split = new SplitText(heroTextEl, { type: "chars,words" });
 
-    const containerDuration = 1.2;
-    const textDelay = containerDuration - 0.5;
+    gsap.context(() => {
+      const heroTextEl = container.querySelector(
+        "[data-hero-text]",
+      ) as HTMLElement;
+      const split = new SplitText(heroTextEl, { type: "chars,words" });
 
-    gsap.set(container, { autoAlpha: 0, scale: 0.97 });
-    gsap.set(split.chars, { opacity: 0, y: 20 });
+      const containerDuration = 1.2;
+      const textDelay = containerDuration - 0.5;
 
-    const tl = gsap.timeline();
+      gsap.set(container, { autoAlpha: 0, scale: 0.97 });
+      gsap.set(split.chars, { opacity: 0, y: 20 });
 
-    tl.to(container, {
-      scale: 1,
-      autoAlpha: 1,
-      duration: containerDuration,
-      ease: "power3.out",
-    }).to(
-      split.chars,
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        stagger: 0.02,
-        ease: "power2.out",
-      },
-      textDelay,
-    );
-  }, container);
-</script>
+      const tl = gsap.timeline();
+
+      tl.to(container, {
+        scale: 1,
+        autoAlpha: 1,
+        duration: containerDuration,
+        ease: "power3.out",
+      }).to(
+        split.chars,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          stagger: 0.02,
+          ease: "power2.out",
+        },
+        textDelay,
+      );
+    }, container);
+  </script>
+</div>

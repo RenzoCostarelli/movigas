@@ -31,7 +31,7 @@ import Logo from "./Logo.astro";
       </ul>
 
       <!-- Divider -->
-      <div class="w-px h-4 bg-neutral-300"></div>
+      <div data-nav-divider class="w-px h-4 bg-neutral-300"></div>
 
       <!-- Social Icons -->
       <div class="flex items-center gap-4">
@@ -121,6 +121,7 @@ import Logo from "./Logo.astro";
 <script>
   import { gsap } from "../../lib/gsap";
 
+  const header = document.querySelector("[data-navbar]") as HTMLElement;
   const toggle = document.querySelector("[data-menu-toggle]") as HTMLButtonElement;
   const menu = document.querySelector("[data-mobile-menu]") as HTMLElement;
   const bar1 = document.querySelector("[data-bar-1]") as HTMLElement;
@@ -128,6 +129,58 @@ import Logo from "./Logo.astro";
   const bar3 = document.querySelector("[data-bar-3]") as HTMLElement;
   const mobileLinks = document.querySelectorAll("[data-mobile-link]");
 
+  // ── Desktop nav entrance animation ────────────────────────────────────────
+  const navLinks = document.querySelectorAll(".nav-link");
+  const socialIcons = document.querySelectorAll(".social-icon");
+  const divider = document.querySelector("[data-nav-divider]");
+
+  gsap.set([navLinks, divider, socialIcons], { opacity: 0, y: -12 });
+
+  gsap.to(navLinks, {
+    opacity: 1,
+    y: 0,
+    duration: 0.45,
+    stagger: 0.08,
+    ease: "power3.out",
+    delay: 0.2,
+  });
+
+  gsap.to([divider, socialIcons], {
+    opacity: 1,
+    y: 0,
+    duration: 0.4,
+    stagger: 0.07,
+    ease: "power3.out",
+    delay: 0.55,
+  });
+
+  // ── Scroll: white background after 20% viewport height ────────────────────
+  let isScrolled = false;
+
+  function onScroll() {
+    const shouldBeScrolled = window.scrollY >= window.innerHeight * 0.2;
+    if (shouldBeScrolled && !isScrolled) {
+      isScrolled = true;
+      gsap.to(header, {
+        backgroundColor: "rgba(255,255,255,1)",
+        boxShadow: "0 1px 16px 0 rgba(0,0,0,0.07)",
+        duration: 0.35,
+        ease: "power2.out",
+      });
+    } else if (!shouldBeScrolled && isScrolled) {
+      isScrolled = false;
+      gsap.to(header, {
+        backgroundColor: "rgba(255,255,255,0)",
+        boxShadow: "0 0px 0px 0 rgba(0,0,0,0)",
+        duration: 0.35,
+        ease: "power2.out",
+      });
+    }
+  }
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  // ── Mobile menu ───────────────────────────────────────────────────────────
   let isOpen = false;
 
   function openMenu() {

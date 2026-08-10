@@ -1,3 +1,7 @@
+---
+import AboutSlider from "./AboutSlider.astro";
+---
+
 <section data-about-section class="pt-32">
   <div class="container mx-auto h-full md:px-0 px-8">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-32 h-full">
@@ -19,11 +23,7 @@
           Enfocados en brindar la mejor calidad.
         </p>
       </div>
-      <div
-        data-about-image
-        class="aspect-square w-full bg-neutral-300 rounded-xl"
-      >
-      </div>
+      <AboutSlider />
     </div>
     <div class="py-12 flex items-center w-full aspect-video">
       <div
