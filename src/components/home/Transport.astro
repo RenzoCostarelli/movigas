@@ -7,9 +7,21 @@ const transportList = [
 ];
 
 const thumbs = [
-  { id: 1, alt: "Flota de transporte 1" },
-  { id: 2, alt: "Flota de transporte 2" },
-  { id: 3, alt: "Flota de transporte 3" },
+  {
+    id: 1,
+    alt: "Flota de transporte 1",
+    src: "https://res.cloudinary.com/dkgnaegp9/image/upload/v1787154397/DSC01208_mrrrqv.jpg",
+  },
+  {
+    id: 2,
+    alt: "Flota de transporte 2",
+    src: "https://res.cloudinary.com/dkgnaegp9/image/upload/v1787154397/DSC01203_bzoaa9.jpg",
+  },
+  {
+    id: 3,
+    alt: "Flota de transporte 3",
+    src: "https://res.cloudinary.com/dkgnaegp9/image/upload/v1787154397/DSC01181_ca3def.jpg",
+  },
 ];
 ---
 
@@ -44,8 +56,9 @@ const thumbs = [
     >
       {
         thumbs.map((thumb) => (
-          <div
+          <img
             data-services-thumb
+            src={thumb.src}}
             class="min-w-[76%] md:min-w-0 shrink-0 md:shrink snap-start aspect-4/3 bg-neutral-100 rounded-lg overflow-hidden"
             aria-label={thumb.alt}
           />
@@ -84,6 +97,7 @@ const thumbs = [
 
 <script>
   import { gsap, ScrollTrigger, SplitText } from "../../lib/gsap";
+  import { animateHeading } from "../../lib/animations";
 
   const section = document.querySelector(
     "[data-services-section]",
@@ -97,47 +111,43 @@ const thumbs = [
       "[data-transport-carousel]",
     ) as HTMLElement;
 
-    const splitHeading = new SplitText(headings[0], { type: "chars,words" });
     const splitBody = new SplitText(bodies[0], { type: "lines" });
-    const splitHeading2 = new SplitText(headings[1], { type: "words" });
     const splitBody2 = new SplitText(bodies[1], { type: "lines" });
 
     // --- Initial states ---
-    gsap.set(splitHeading.chars, { opacity: 0, y: 30, rotateX: -15 });
     gsap.set(splitBody.lines, { opacity: 0, y: 12 });
     gsap.set(thumbs, { opacity: 0, y: 40 });
-    gsap.set(splitHeading2.words, { opacity: 0, y: 20 });
     gsap.set(splitBody2.lines, { opacity: 0 });
 
     // --- Header timeline ---
     const tlHeader = gsap.timeline({ paused: true });
 
-    tlHeader
-      .to(splitHeading.chars, {
-        opacity: 1,
-        y: 0,
-        rotateX: 0,
-        duration: 0.8,
-        stagger: 0.02,
-        ease: "power3.out",
-      })
-      .to(
-        splitBody.lines,
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          stagger: 0.08,
-          ease: "power2.out",
-        },
-        "-=0.3",
-      );
+    animateHeading(headings[0], tlHeader, { stagger: 0.02 });
 
     ScrollTrigger.create({
       trigger: section,
       start: "top 75%",
-      end: "top 25%",
+      end: "top 40%",
       animation: tlHeader,
+      scrub: true,
+    });
+
+    // --- Body timeline ---
+    const tlBody = gsap.timeline({ paused: true });
+
+    tlBody.to(splitBody.lines, {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      stagger: 0.08,
+      ease: "power2.out",
+    });
+
+    ScrollTrigger.create({
+      trigger: bodies[0],
+      start: "top 80%",
+      end: "bottom 40%",
+      animation: tlBody,
       scrub: true,
     });
 
@@ -160,33 +170,34 @@ const thumbs = [
       scrub: true,
     });
 
-    // --- Secondary content timeline ---
+    // --- Secondary heading timeline ---
     const tlSecondary = gsap.timeline({ paused: true });
 
-    tlSecondary
-      .to(splitHeading2.words, {
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        stagger: 0.05,
-        ease: "power3.out",
-      })
-      .to(
-        splitBody2.lines,
-        {
-          opacity: 1,
-          duration: 0.5,
-          stagger: 0.08,
-          ease: "power2.out",
-        },
-        "-=0.2",
-      );
+    animateHeading(headings[1], tlSecondary, { stagger: 0.03 });
 
     ScrollTrigger.create({
       trigger: headings[1],
       start: "top 80%",
-      end: "top 30%",
+      end: "top 40%",
       animation: tlSecondary,
+      scrub: true,
+    });
+
+    // --- Secondary body timeline ---
+    const tlBody2 = gsap.timeline({ paused: true });
+
+    tlBody2.to(splitBody2.lines, {
+      opacity: 1,
+      duration: 0.5,
+      stagger: 0.08,
+      ease: "power2.out",
+    });
+
+    ScrollTrigger.create({
+      trigger: bodies[1],
+      start: "top 80%",
+      end: "bottom 40%",
+      animation: tlBody2,
       scrub: true,
     });
   }, section);

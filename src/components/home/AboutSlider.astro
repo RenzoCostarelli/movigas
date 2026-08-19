@@ -3,15 +3,24 @@ import SliderDots from "./SliderDots.astro";
 import type { Slide } from "../../types/slider";
 
 const slides: Slide[] = [
-  { src: "/images/about/slide-1.jpg", alt: "Nosotros Movigas" },
-  { src: "/images/about/slide-2.jpg", alt: "Nosotros Movigas" },
-  { src: "/images/about/slide-3.jpg", alt: "Nosotros Movigas" },
+  {
+    src: "https://res.cloudinary.com/dkgnaegp9/image/upload/v1787152638/DSC01157_cilgw3.jpg",
+    alt: "Nosotros Movigas",
+  },
+  {
+    src: "https://res.cloudinary.com/dkgnaegp9/image/upload/v1787152638/DSC01095_buj43w.jpg",
+    alt: "Camión Movigas",
+  },
+  {
+    src: "https://res.cloudinary.com/dkgnaegp9/image/upload/v1787152638/DJI_20260807105711_0086_D_jilwl7.jpg",
+    alt: "Fotografia area flota camiones Movigas",
+  },
 ];
 ---
 
 <div
   data-about-image
-  class="relative aspect-square w-full rounded-xl overflow-hidden bg-neutral-300"
+  class="relative aspect-square w-full rounded-xl shadow-md"
 >
   <div data-about-swiper class="swiper h-full w-full">
     <div class="swiper-wrapper h-full">
@@ -21,7 +30,7 @@ const slides: Slide[] = [
             <img
               src={slide.src}
               alt={slide.alt}
-              class="h-full w-full object-cover"
+              class="h-full w-full object-cover rounded-md"
             />
           </div>
         ))
@@ -35,6 +44,7 @@ const slides: Slide[] = [
 
 <script>
   import Swiper from "swiper";
+  import { Autoplay } from "swiper/modules";
   import "swiper/css";
 
   const swiperEl = document.querySelector("[data-about-swiper]") as HTMLElement;
@@ -58,7 +68,15 @@ const slides: Slide[] = [
   }
 
   const swiper = new Swiper(swiperEl, {
+    modules: [Autoplay],
+    autoplay: {
+      delay: 3000,
+      disableOnInteraction: false,
+    },
+    speed: 1000,
     slidesPerView: 1,
+    spaceBetween: 6,
+    loop: true,
     on: {
       slideChange(s) {
         updateDots(s.activeIndex);
@@ -73,3 +91,9 @@ const slides: Slide[] = [
     });
   });
 </script>
+
+<style>
+  [data-about-swiper] .swiper-wrapper {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+</style>

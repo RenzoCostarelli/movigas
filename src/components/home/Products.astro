@@ -5,18 +5,18 @@ import { products } from "../../data/products";
 
 <section
   data-products-section
+  id="productos"
   class="py-24 bg-neutral-700 text-white overflow-hidden"
 >
   <div class="container mx-auto md:px-0 px-8">
-    <!-- Section header -->
     <div class="mb-20 flex flex-col gap-6">
       <div class="flex flex-col gap-4">
-        <span
+        <!-- <span
           data-products-label
           class="text-xs uppercase tracking-[0.3em] text-neutral-400 font-medium"
         >
           Lo que ofrecemos
-        </span>
+        </span> -->
         <h2
           data-products-heading
           class="text-6xl font-bold leading-none tracking-tight"
@@ -34,7 +34,6 @@ import { products } from "../../data/products";
       </p>
     </div>
 
-    <!-- Products grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6">
       {products.map((product) => <ProductCard product={product} />)}
     </div>
@@ -43,6 +42,7 @@ import { products } from "../../data/products";
 
 <script>
   import { gsap, ScrollTrigger, SplitText } from "../../lib/gsap";
+  import { animateHeading } from "../../lib/animations";
 
   const section = document.querySelector(
     "[data-products-section]",
@@ -60,7 +60,6 @@ import { products } from "../../data/products";
       "[data-products-subtitle]",
     ) as HTMLElement;
 
-    const splitHeading = new SplitText(headingEl, { type: "chars,words" });
     const splitLabel = new SplitText(labelEl, { type: "chars" });
     const splitSubtitle = new SplitText(subtitleEl, { type: "lines" });
 
@@ -75,7 +74,6 @@ import { products } from "../../data/products";
 
     // --- Initial states ---
     gsap.set(splitLabel.chars, { opacity: 0, y: 8 });
-    gsap.set(splitHeading.chars, { opacity: 0, y: 40, rotateX: -15 });
     gsap.set(splitSubtitle.lines, { opacity: 0, y: 12 });
     gsap.set("[data-product-card]", { opacity: 0, y: 60 });
     gsap.set("[data-product-image]", { scale: 1.05 });
@@ -86,26 +84,17 @@ import { products } from "../../data/products";
     // --- Header timeline ---
     const tlHeader = gsap.timeline({ paused: true });
 
+    tlHeader.to(splitLabel.chars, {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      stagger: 0.015,
+      ease: "power2.out",
+    });
+
+    animateHeading(headingEl, tlHeader, { stagger: 0.02, position: "-=0.3" });
+
     tlHeader
-      .to(splitLabel.chars, {
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        stagger: 0.015,
-        ease: "power2.out",
-      })
-      .to(
-        splitHeading.chars,
-        {
-          opacity: 1,
-          y: 0,
-          rotateX: 0,
-          duration: 0.8,
-          stagger: 0.02,
-          ease: "power3.out",
-        },
-        "-=0.3",
-      )
       .to(
         splitSubtitle.lines,
         {
