@@ -1,11 +1,12 @@
 ---
 import AboutSlider from "./AboutSlider.astro";
+import AboutVideo from "./AboutVideo.astro";
 ---
 
 <section data-about-section class="pt-32">
   <div class="container mx-auto h-full md:px-0 px-8">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-16 h-full">
-      <div class="flex justify-center flex-col pl-5">
+      <div class="flex md:pt-32 flex-col pl-5">
         <h2 data-about-heading class="text-5xl font-bold mb-4 text-neutral-600">
           Nosotros
         </h2>
@@ -25,22 +26,13 @@ import AboutSlider from "./AboutSlider.astro";
       </div>
       <AboutSlider />
     </div>
-    <div class="py-12 flex items-center w-full aspect-video">
-      <div
-        class="w-full h-full min-h-[30vh] max-h-[90vh] bg-neutral-300 rounded-xl flex items-center justify-center"
-      >
-        <div
-          class="w-24 md:w-40 h-24 md:h-40 bg-neutral-700 flex items-center justify-center rounded-full shadow-md"
-        >
-          <div class="text-white font-bold">Ver video</div>
-        </div>
-      </div>
-    </div>
+    <AboutVideo />
   </div>
 </section>
 
 <script>
   import { gsap, ScrollTrigger, SplitText } from "../../lib/gsap";
+  import { animateHeading } from "../../lib/animations";
 
   const section = document.querySelector("[data-about-section]") as HTMLElement;
 
@@ -51,55 +43,50 @@ import AboutSlider from "./AboutSlider.astro";
     const bodyEl = section.querySelector("[data-about-body]") as HTMLElement;
     const imageEl = section.querySelector("[data-about-image]") as HTMLElement;
 
-    const splitHeading = new SplitText(headingEl, { type: "chars,words" });
     const splitBody = new SplitText(bodyEl, { type: "lines" });
 
-    gsap.set(splitHeading.words, { opacity: 0, y: 20 });
     gsap.set(splitBody.lines, { opacity: 0.25 });
-    gsap.set(imageEl, { opacity: 0, y: 24, scale: 1.05 });
+    gsap.set(imageEl, { opacity: 0, x: 54 });
 
-    const tl = gsap.timeline({ paused: true });
+    const tl2 = gsap.timeline({ paused: true });
 
-    tl.to(
-      imageEl,
-      {
-        opacity: 1,
-        scale: 1,
-        y: 0,
-        duration: 2,
-        ease: "power3.inOut",
-      },
-      "-=0.5",
-    );
-
-    const tl2 = gsap
-      .timeline({ paused: true })
-      .to(splitHeading.words, {
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        stagger: 0.025,
-        ease: "power3.out",
-      })
-      .to(
-        splitBody.lines,
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.7,
-          stagger: 0.1,
-          ease: "power2.out",
-        },
-        "-=0.2",
-      );
+    animateHeading(headingEl, tl2, { stagger: 0.04 });
 
     ScrollTrigger.create({
       trigger: section,
-      start: "15% center",
+      start: "top center",
       end: "25% center",
       animation: tl2,
       scrub: true,
     });
+
+    const tlBody = gsap.timeline({ paused: true });
+
+    tlBody.to(splitBody.lines, {
+      opacity: 1,
+      duration: 0.7,
+      stagger: 0.1,
+      ease: "power2.out",
+    });
+
+    ScrollTrigger.create({
+      trigger: bodyEl,
+      start: "top 80%",
+      end: "center center",
+      animation: tlBody,
+      scrub: true,
+    });
+
+    const tl = gsap.timeline({ paused: true }).to(
+      imageEl,
+      {
+        x: 0,
+        opacity: 1,
+        duration: 2,
+      },
+      "-=0.5",
+    );
+
     ScrollTrigger.create({
       trigger: section,
       start: "top center",

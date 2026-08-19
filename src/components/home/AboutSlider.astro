@@ -70,9 +70,10 @@ const slides: Slide[] = [
   const swiper = new Swiper(swiperEl, {
     modules: [Autoplay],
     autoplay: {
-      delay: 2500,
+      delay: 3000,
       disableOnInteraction: false,
     },
+    speed: 1000,
     slidesPerView: 1,
     spaceBetween: 6,
     loop: true,
@@ -90,3 +91,9 @@ const slides: Slide[] = [
     });
   });
 </script>
+
+<style>
+  [data-about-swiper] .swiper-wrapper {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+</style>

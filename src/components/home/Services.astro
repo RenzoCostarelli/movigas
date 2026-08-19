@@ -78,6 +78,7 @@ const transportList = [
 
 <script>
   import { gsap, ScrollTrigger, SplitText } from "../../lib/gsap";
+  import { animateHeading } from "../../lib/animations";
 
   const section = document.querySelector(
     "[data-services-section]",
@@ -88,9 +89,9 @@ const transportList = [
     const splitLabel = new SplitText("[data-services-label]", {
       type: "chars",
     });
-    const splitHeading = new SplitText("[data-services-heading]", {
-      type: "words",
-    });
+    const headingEl = section.querySelector(
+      "[data-services-heading]",
+    ) as HTMLElement;
     const splitBody = new SplitText("[data-services-body]", { type: "lines" });
     const splitIntro = new SplitText("[data-services-intro]", {
       type: "chars",
@@ -98,7 +99,6 @@ const transportList = [
 
     // --- Initial states ---
     gsap.set(splitLabel.chars, { opacity: 0, y: 10 });
-    gsap.set(splitHeading.words, { opacity: 0, y: 50, rotateX: -20 });
     gsap.set("[data-services-image-main]", { opacity: 0, scale: 0.97, y: 20 });
     gsap.set(splitBody.lines, { opacity: 0, y: 12 });
     gsap.set(splitIntro.chars, { opacity: 0 });
@@ -108,26 +108,15 @@ const transportList = [
     // --- Header timeline (label + heading) ---
     const tlHeader = gsap.timeline({ paused: true });
 
-    tlHeader
-      .to(splitLabel.chars, {
-        opacity: 1,
-        y: 0,
-        duration: 0.5,
-        stagger: 0.02,
-        ease: "power2.out",
-      })
-      .to(
-        splitHeading.words,
-        {
-          opacity: 1,
-          y: 0,
-          rotateX: 0,
-          duration: 0.8,
-          stagger: 0.04,
-          ease: "power3.out",
-        },
-        "-=0.2",
-      );
+    tlHeader.to(splitLabel.chars, {
+      opacity: 1,
+      y: 0,
+      duration: 0.5,
+      stagger: 0.02,
+      ease: "power2.out",
+    });
+
+    animateHeading(headingEl, tlHeader, { stagger: 0.02, position: "-=0.2" });
 
     ScrollTrigger.create({
       trigger: section,

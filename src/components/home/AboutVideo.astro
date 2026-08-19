@@ -1,0 +1,115 @@
+---
+
+---
+
+<div class="py-12 flex items-center w-full aspect-video" data-about-video>
+  <div
+    class="relative w-full h-full min-h-[30vh] max-h-[90vh] bg-neutral-300 rounded-xl flex items-center justify-center overflow-hidden"
+  >
+    <img
+      src="https://res.cloudinary.com/dkgnaegp9/image/upload/v1787155837/DJI_20260807104131_0068_D_gdwcg2.jpg"
+      class="h-full w-full inset-0 absolute object-cover"
+      aria-hidden
+    />
+    <div class="absolute inset-0 h-full w-full bg-neutral-900/20"></div>
+    <div
+      class="relative cursor-pointer w-24 md:w-35 h-24 md:h-35 overflow-hidden backdrop-blur-[2px] bg-transparent bg-linear-to-tl from-neutral-600/40 to-white/30 shadow-[-1px_-1px_0.5px_0px_rgba(255,255,255,0.55),1px_1px_0.5px_0px_rgba(255,255,255,0.25)] flex items-center justify-center rounded-full"
+      data-play-button
+    >
+      <span
+        data-play-glow
+        class="absolute h-full w-full inset-0 bg-radial from-white blur-xl to-transparent opacity-0"
+      ></span>
+      <div data-play-btn-text class="relative text-white">Ver video</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { gsap, ScrollTrigger, SplitText } from "../../lib/gsap";
+
+  const videoEl = document.querySelector("[data-about-video]") as HTMLElement;
+  const playBtn = videoEl.querySelector("[data-play-button]") as HTMLElement;
+  const playGlow = playBtn.querySelector("[data-play-glow]") as HTMLElement;
+  const playBtnTextEl = playBtn.querySelector(
+    "[data-play-btn-text]",
+  ) as HTMLElement;
+  const splitPlayBtn = new SplitText(playBtnTextEl, { type: "chars" });
+
+  const entranceTl = gsap.timeline({ paused: true });
+
+  entranceTl.from(videoEl, { opacity: 0, y: 60, duration: 1, ease: "power3.out" });
+
+  ScrollTrigger.create({
+    trigger: videoEl,
+    start: "top 85%",
+    end: "top 40%",
+    animation: entranceTl,
+    scrub: true,
+  });
+
+  const BASE_WEIGHT = 300;
+  const MAX_WEIGHT = 900;
+  const WEIGHT_RADIUS = 25;
+  const MAX_MOVE = 20;
+
+  const btnMoveX = gsap.quickTo(playBtn, "x", {
+    duration: 0.8,
+    ease: "power3.out",
+  });
+  const btnMoveY = gsap.quickTo(playBtn, "y", {
+    duration: 0.8,
+    ease: "power3.out",
+  });
+  const glowX = gsap.quickTo(playGlow, "x", {
+    duration: 0.5,
+    ease: "power3.out",
+  });
+  const glowY = gsap.quickTo(playGlow, "y", {
+    duration: 0.5,
+    ease: "power3.out",
+  });
+  const glowOpacity = gsap.quickTo(playGlow, "opacity", {
+    duration: 0.4,
+    ease: "power2.out",
+  });
+  const weightFns = splitPlayBtn.chars.map((char) =>
+    gsap.quickTo(char, "fontWeight", { duration: 0.35, ease: "power3.out" }),
+  );
+
+  videoEl.addEventListener("mousemove", (e: MouseEvent) => {
+    const rect = videoEl.getBoundingClientRect();
+    const nx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+    const ny = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+    btnMoveX(nx * MAX_MOVE);
+    btnMoveY(ny * MAX_MOVE);
+  });
+
+  videoEl.addEventListener("mouseleave", () => {
+    btnMoveX(0);
+    btnMoveY(0);
+    glowOpacity(0);
+    weightFns.forEach((fn) => fn(BASE_WEIGHT));
+  });
+
+  playBtn.addEventListener("mousemove", (e: MouseEvent) => {
+    const btnRect = playBtn.getBoundingClientRect();
+    glowX(e.clientX - btnRect.left - btnRect.width / 2);
+    glowY(e.clientY - btnRect.top - btnRect.height / 2);
+    glowOpacity(0.25);
+
+    splitPlayBtn.chars.forEach((char, i) => {
+      const rect = char.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dist = Math.sqrt((e.clientX - cx) ** 2 + (e.clientY - cy) ** 2);
+      const proximity = Math.max(0, 1 - dist / WEIGHT_RADIUS);
+      weightFns[i](BASE_WEIGHT + (MAX_WEIGHT - BASE_WEIGHT) * proximity);
+    });
+  });
+
+  playBtn.addEventListener("mouseleave", () => {
+    glowOpacity(0);
+    weightFns.forEach((fn) => fn(BASE_WEIGHT));
+  });
+</script>
