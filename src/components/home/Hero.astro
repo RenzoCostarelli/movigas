@@ -34,12 +34,16 @@
           <a href="#contacto" class="group">
             <a href="#productos" class="group">
               <div
-                class="block relative bg-transparent overflow-hidden transition-colors duration-500 shadow-[-1px_-1px_0.5px_0px_rgba(255,255,255,0.55),1px_1px_0.5px_0px_rgba(255,255,255,0.25)] text-neutral-50 rounded-full px-8 py-3 font-semibold"
+                data-hero-btn
+                class="block relative bg-transparent overflow-hidden transition-colors duration-500 shadow-[-1px_-1px_0.5px_0px_rgba(255,255,255,0.55),1px_1px_0.5px_0px_rgba(255,255,255,0.25)] text-neutral-50 rounded-md px-8 py-3 font-black"
               >
                 <span
+                  data-btn-glow
                   class="absolute h-full w-full inset-0 bg-radial from-white blur-xl to-transparent rounded-full opacity-0 group-hover:opacity-40 group-hover:translate-y-5.5 translate-y-7.5 translate-x-16 transition-all duration-500"
                 ></span>
-                <span class="relative">Nuestros Productos </span>
+                <span data-hero-btn-text class="relative"
+                  >Nuestros Productos</span
+                >
               </div>
             </a>
           </a>
@@ -85,6 +89,38 @@
         },
         textDelay,
       );
+
+      const btnEl = container.querySelector("[data-hero-btn]") as HTMLElement;
+      const btnTextEl = container.querySelector(
+        "[data-hero-btn-text]",
+      ) as HTMLElement;
+      const splitBtn = new SplitText(btnTextEl, { type: "chars" });
+
+      const BASE_WEIGHT = 200;
+      const MAX_WEIGHT = 900;
+      const RADIUS = 80;
+
+      const weightFns = splitBtn.chars.map((char) =>
+        gsap.quickTo(char, "fontWeight", {
+          duration: 0.35,
+          ease: "power3.out",
+        }),
+      );
+
+      btnEl.addEventListener("mousemove", (e: MouseEvent) => {
+        splitBtn.chars.forEach((char, i) => {
+          const rect = char.getBoundingClientRect();
+          const cx = rect.left + rect.width / 2;
+          const cy = rect.top + rect.height / 2;
+          const dist = Math.sqrt((e.clientX - cx) ** 2 + (e.clientY - cy) ** 2);
+          const proximity = Math.max(0, 1 - dist / RADIUS);
+          weightFns[i](BASE_WEIGHT + (MAX_WEIGHT - BASE_WEIGHT) * proximity);
+        });
+      });
+
+      btnEl.addEventListener("mouseleave", () => {
+        weightFns.forEach((fn) => fn(BASE_WEIGHT));
+      });
     }, container);
   </script>
 </div>

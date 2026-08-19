@@ -7,9 +7,21 @@ const transportList = [
 ];
 
 const thumbs = [
-  { id: 1, alt: "Flota de transporte 1" },
-  { id: 2, alt: "Flota de transporte 2" },
-  { id: 3, alt: "Flota de transporte 3" },
+  {
+    id: 1,
+    alt: "Flota de transporte 1",
+    src: "https://res.cloudinary.com/dkgnaegp9/image/upload/v1787154397/DSC01208_mrrrqv.jpg",
+  },
+  {
+    id: 2,
+    alt: "Flota de transporte 2",
+    src: "https://res.cloudinary.com/dkgnaegp9/image/upload/v1787154397/DSC01203_bzoaa9.jpg",
+  },
+  {
+    id: 3,
+    alt: "Flota de transporte 3",
+    src: "https://res.cloudinary.com/dkgnaegp9/image/upload/v1787154397/DSC01181_ca3def.jpg",
+  },
 ];
 ---
 
@@ -44,8 +56,9 @@ const thumbs = [
     >
       {
         thumbs.map((thumb) => (
-          <div
+          <img
             data-services-thumb
+            src={thumb.src}}
             class="min-w-[76%] md:min-w-0 shrink-0 md:shrink snap-start aspect-4/3 bg-neutral-100 rounded-lg overflow-hidden"
             aria-label={thumb.alt}
           />
