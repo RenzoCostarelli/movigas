@@ -1,7 +1,7 @@
 <div class="h-[80svh] md:h-[90svh] px-4">
   <div
     data-hero-container
-    class="relative rounded-xl shadow-xl bg-neutral-200 flex flex-col items-center justify-center h-full gap-4 overflow-hidden"
+    class="relative rounded-xl shadow-xl bg-neutral-200 flex flex-col items-center justify-center h-full gap-4"
   >
     <video
       class="absolute inset-0 w-full h-full object-cover"
@@ -15,16 +15,21 @@
     >
     </div>
     <div
-      class="relative container mx-auto z-10 h-full w-full flex flex-col items-start justify-end pl-8 pb-12 md:pl-0 md:pb-24 text-neutral-50"
+      class="relative container mx-auto z-10 h-full w-full flex flex-col items-start justify-end pb-12 px-5 md:pl-0 md:pb-24 text-neutral-50"
     >
       <div class="w-full flex flex-col gap-12 justify-between items-start">
-        <div class="w-2xl" data-hero-text>
-          <p class="text-2xl md:text-5xl leading-none">CALIDAD CERTIFICADA</p>
-          <p class="text-2xl md:text-5xl mb-4 font-semibold">
-            SERVICIO ASEGURADO
-          </p>
+        <div class="w-full max-w-2xl">
+          <h1 data-hero-title class="flex flex-col">
+            <span class="text-2xl md:text-5xl leading-none"
+              >CALIDAD CERTIFICADA</span
+            >
+            <span class="text-2xl md:text-5xl mb-4 font-semibold"
+              >SERVICIO ASEGURADO</span
+            >
+          </h1>
           <p
-            class="md:text-xl leading-none font-extralight text-balance italic"
+            class="md:text-xl leading-none font-extralight italic"
+            data-hero-text
           >
             Creemos que la mejor manera de ofrecer un buen servicio es enfocarse
             día a día en conseguir la mejor calidad.
@@ -32,7 +37,6 @@
         </div>
         <div class="flex">
           <a
-            data-politics-cta
             href="#productos"
             class="mt-6 inline-block bg-neutral-50 border border-neutral-900 text-sm px-6 py-3 w-max font-bold text-neutral-950 hover:text-red-700 transition-colors"
           >
@@ -51,16 +55,22 @@
     ) as HTMLElement;
 
     gsap.context(() => {
+      const heroTitleEl = container.querySelector(
+        "[data-hero-title]",
+      ) as HTMLElement;
       const heroTextEl = container.querySelector(
         "[data-hero-text]",
       ) as HTMLElement;
-      const split = new SplitText(heroTextEl, { type: "chars,words" });
+
+      const splitTitle = new SplitText(heroTitleEl, { type: "lines" });
+      const splitText = new SplitText(heroTextEl, { type: "words" });
 
       const containerDuration = 1.2;
-      const textDelay = containerDuration - 0.5;
+      const titleDelay = containerDuration - 0.5;
 
       gsap.set(container, { autoAlpha: 0, scale: 0.97 });
-      gsap.set(split.chars, { opacity: 0, y: 20 });
+      gsap.set(splitTitle.lines, { opacity: 0, y: 30 });
+      gsap.set(splitText.words, { opacity: 0, y: 20 });
 
       const tl = gsap.timeline();
 
@@ -69,17 +79,29 @@
         autoAlpha: 1,
         duration: containerDuration,
         ease: "power3.out",
-      }).to(
-        split.chars,
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          stagger: 0.02,
-          ease: "power2.out",
-        },
-        textDelay,
-      );
+      })
+        .to(
+          splitTitle.lines,
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            stagger: 0.15,
+            ease: "power2.out",
+          },
+          titleDelay,
+        )
+        .to(
+          splitText.words,
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            stagger: 0.04,
+            ease: "power2.out",
+          },
+          ">-0.3",
+        );
     }, container);
   </script>
 </div>

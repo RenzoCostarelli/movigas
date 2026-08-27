@@ -19,7 +19,7 @@ import { products } from "../../data/products";
         </span> -->
         <h2
           data-products-heading
-          class="text-6xl font-bold leading-none tracking-tight"
+          class="text-3xl md:text-5xl font-bold leading-none tracking-tight"
         >
           Nuestros Productos
         </h2>
@@ -94,18 +94,17 @@ import { products } from "../../data/products";
 
     animateHeading(headingEl, tlHeader, { stagger: 0.02, position: "-=0.3" });
 
-    tlHeader
-      .to(
-        splitSubtitle.lines,
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.7,
-          stagger: 0.1,
-          ease: "power2.out",
-        },
-        "-=0.4",
-      );
+    tlHeader.to(
+      splitSubtitle.lines,
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        stagger: 0.1,
+        ease: "power2.out",
+      },
+      "-=0.4",
+    );
 
     ScrollTrigger.create({
       trigger: section,
