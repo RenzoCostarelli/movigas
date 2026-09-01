@@ -1,4 +1,4 @@
-<div class="h-[80svh] md:h-[90svh] px-4">
+<div class="h-[80svh] md:h-[110svh] px-4 overflow-hidden">
   <div
     data-hero-container
     class="relative rounded-xl shadow-xl bg-neutral-200 flex overflow-hidden flex-col items-center justify-center h-full gap-4"
@@ -9,7 +9,8 @@
       autoplay
       loop
       muted
-      playsinline></video>
+      playsinline
+      data-hero-video></video>
     <div
       class="absolute rounded-xl inset-0 w-full h-full bg-linear-to-t from-neutral-900 to-50% to-transparent"
     >
@@ -55,6 +56,9 @@
     ) as HTMLElement;
 
     gsap.context(() => {
+      const heroVideoEl = container.querySelector(
+        "[data-hero-video]",
+      ) as HTMLVideoElement;
       const heroTitleEl = container.querySelector(
         "[data-hero-title]",
       ) as HTMLElement;
@@ -68,13 +72,15 @@
       const containerDuration = 1.2;
       const titleDelay = containerDuration - 0.5;
 
-      gsap.set(container, { autoAlpha: 0, scale: 0.97 });
-      gsap.set(splitTitle.lines, { opacity: 0, y: 30 });
-      gsap.set(splitText.words, { opacity: 0, y: 20 });
+      gsap.set(heroVideoEl, { autoAlpha: 0, scale: 0.75 });
+      gsap.set(splitTitle.lines, { yPercent: 110, opacity: 0 });
+      gsap.set(splitText.words, { yPercent: 110, opacity: 0 });
+      gsap.set(heroTitleEl, { overflow: "hidden" });
+      gsap.set(heroTextEl, { overflow: "hidden" });
 
       const tl = gsap.timeline();
 
-      tl.to(container, {
+      tl.to(heroVideoEl, {
         scale: 1,
         autoAlpha: 1,
         duration: containerDuration,
@@ -84,7 +90,7 @@
           splitTitle.lines,
           {
             opacity: 1,
-            y: 0,
+            yPercent: 0,
             duration: 0.7,
             stagger: 0.15,
             ease: "power2.out",
@@ -95,7 +101,7 @@
           splitText.words,
           {
             opacity: 1,
-            y: 0,
+            yPercent: 0,
             duration: 0.5,
             stagger: 0.04,
             ease: "power2.out",
