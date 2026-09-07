@@ -36,8 +36,9 @@
             día a día en conseguir la mejor calidad.
           </p>
         </div>
-        <div class="flex">
+        <div class="flex overflow-hidden">
           <a
+            data-cta-button
             href="#productos"
             class="mt-6 inline-block bg-neutral-50 border border-neutral-900 text-sm px-6 py-3 w-max font-bold text-neutral-950 hover:text-red-700 transition-colors"
           >
@@ -64,6 +65,9 @@
       const heroTextEl = container.querySelector(
         "[data-hero-text]",
       ) as HTMLElement;
+      const ctaButtonEl = container.querySelector(
+        "[data-cta-button]",
+      ) as HTMLElement;
 
       const splitTitle = new SplitText(heroTitleEl, { type: "lines" });
       const splitText = new SplitText(heroTextEl, { type: "words" });
@@ -74,6 +78,7 @@
       gsap.set(container, { autoAlpha: 0, scale: 0.75, y: 50 });
       gsap.set(splitTitle.lines, { yPercent: 110, opacity: 0 });
       gsap.set(splitText.words, { yPercent: 110, opacity: 0 });
+      gsap.set(ctaButtonEl, { yPercent: 110, opacity: 0 });
       gsap.set(heroTitleEl, { overflow: "hidden" });
       gsap.set(heroTextEl, { overflow: "hidden" });
 
@@ -107,6 +112,16 @@
             ease: "power2.out",
           },
           ">-0.3",
+        )
+        .to(
+          ctaButtonEl,
+          {
+            opacity: 1,
+            yPercent: 0,
+            duration: 0.6,
+            ease: "power2.out",
+          },
+          ">-0.2",
         );
     }, container);
   </script>

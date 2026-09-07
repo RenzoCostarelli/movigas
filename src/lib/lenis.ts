@@ -1,13 +1,28 @@
 import Lenis from "lenis";
 
+function getScrollOffset() {
+  const header = document.querySelector("[data-navbar]") as HTMLElement | null;
+  return header ? -(header.offsetHeight + 16) : -16;
+}
+
 export function initLenis() {
   // Prevent browser from restoring previous scroll position on load
   history.scrollRestoration = "manual";
 
-  const lenis = new Lenis();
+  const offset = getScrollOffset();
+  const lenis = new Lenis({ anchors: { offset } });
 
-  // Force scroll to top immediately on init (no animation)
-  lenis.scrollTo(0, { immediate: true });
+  // Respect a hash already in the URL (e.g. arriving from "/#servicios"),
+  // otherwise force scroll to top immediately (no animation)
+  const hashTarget = window.location.hash
+    ? document.querySelector(window.location.hash)
+    : null;
+
+  if (hashTarget) {
+    lenis.scrollTo(hashTarget as HTMLElement, { immediate: true, offset });
+  } else {
+    lenis.scrollTo(0, { immediate: true });
+  }
 
   function raf(time: number) {
     lenis.raf(time);
