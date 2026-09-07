@@ -5,6 +5,12 @@ export const products: Product[] = [
     slug: "amoniaco-anhidro",
     name: "Amoniaco Anhidro",
     tagline: "Comercialización, fraccionamiento y distribución a granel",
+    media: {
+      thumbnailUrl:
+        "https://res.cloudinary.com/dkgnaegp9/image/upload/v1788789582/Copia_de_DSC01049_id67rf.jpg",
+      mainImage:
+        "https://res.cloudinary.com/dkgnaegp9/image/upload/v1788789582/Copia_de_DSC01049_id67rf.jpg",
+    },
     description:
       "Comercializamos Amoniaco Anhidro a granel para el mercado nacional e internacional. Contamos con planta de fraccionamiento propia, flota especializada y más de seis décadas de experiencia en el manejo seguro de sustancias peligrosas.",
     applications: [
@@ -42,6 +48,12 @@ export const products: Product[] = [
     slug: "agua-amoniacal",
     name: "Agua Amoniacal",
     tagline: "Solución amoniacal de alta calidad por osmosis inversa",
+    media: {
+      thumbnailUrl:
+        "https://res.cloudinary.com/dkgnaegp9/image/upload/v1788790434/Copia-de-DSC01268_tbscpk.jpg",
+      mainImage:
+        "https://res.cloudinary.com/dkgnaegp9/image/upload/v1788790434/Copia-de-DSC01268_tbscpk.jpg",
+    },
     description:
       "Producimos Agua Amoniacal formulada a partir de agua tratada por osmosis inversa, garantizando alta y uniforme calidad. Ofrecemos formulaciones personalizadas según las densidades requeridas por cada cliente, para mercado interno y externo.",
     applications: [

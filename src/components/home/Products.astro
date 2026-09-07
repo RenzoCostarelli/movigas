@@ -76,7 +76,6 @@ import { products } from "../../data/products";
     gsap.set(splitLabel.chars, { opacity: 0, y: 8 });
     gsap.set(splitSubtitle.lines, { opacity: 0, y: 12 });
     gsap.set("[data-product-card]", { opacity: 0, y: 60 });
-    gsap.set("[data-product-image]", { scale: 1.05 });
     splitNames.forEach((s) => gsap.set(s.lines, { opacity: 0, y: 16 }));
     splitDescs.forEach((s) => gsap.set(s.lines, { opacity: 0 }));
     gsap.set("[data-product-number]", { opacity: 0 });
@@ -177,7 +176,7 @@ import { products } from "../../data/products";
     ScrollTrigger.create({
       trigger: "[data-product-card]",
       start: "top 80%",
-      end: "bottom 40%",
+      end: "center center",
       animation: tlCards,
       scrub: true,
     });

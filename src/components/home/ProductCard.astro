@@ -15,12 +15,13 @@ const { product } = Astro.props;
 >
   <div
     data-product-image
-    class="w-full aspect-[3/2] bg-neutral-800 rounded-lg overflow-hidden relative"
+    class="w-full aspect-[3/2] bg-neutral-800 rounded-lg overflow-hidden relative group"
   >
-    <div
-      class="absolute inset-0 bg-linear-to-t from-neutral-950/60 to-transparent"
-    >
-    </div>
+    <img
+      src={product.media.thumbnailUrl}
+      alt="Fotografía area flota Movigas"
+      class="h-full w-full object-cover rounded-md transition-transform duration-500 group-hover:scale-103"
+    />
   </div>
 
   <div class="flex flex-col gap-3 pb-8 border-b border-neutral-800">

@@ -8,6 +8,11 @@ export interface ProductService {
   description: string;
 }
 
+export interface Media {
+  thumbnailUrl: string;
+  mainImage: string;
+}
+
 export interface Product {
   slug: string;
   name: string;
@@ -16,6 +21,7 @@ export interface Product {
   applications: string[];
   presentations: string[];
   services: ProductService[];
+  media: Media;
   coverage: string;
   pdfs: ProductPdf;
 }

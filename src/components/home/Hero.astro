@@ -71,7 +71,7 @@
       const containerDuration = 1.2;
       const titleDelay = containerDuration - 0.5;
 
-      gsap.set(heroVideoEl, { autoAlpha: 0, scale: 0.75 });
+      gsap.set(container, { autoAlpha: 0, scale: 0.75, y: 50 });
       gsap.set(splitTitle.lines, { yPercent: 110, opacity: 0 });
       gsap.set(splitText.words, { yPercent: 110, opacity: 0 });
       gsap.set(heroTitleEl, { overflow: "hidden" });
@@ -79,9 +79,10 @@
 
       const tl = gsap.timeline();
 
-      tl.to(heroVideoEl, {
+      tl.to(container, {
         scale: 1,
         autoAlpha: 1,
+        y: 0,
         duration: containerDuration,
         ease: "power3.out",
       })
