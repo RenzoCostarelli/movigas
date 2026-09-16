@@ -82,12 +82,48 @@ export const POST: APIRoute = async ({ request }) => {
         .filter(Boolean)
         .join("\n"),
       html: `
-        <p><strong>Nombre:</strong> ${nombre}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        ${telefono ? `<p><strong>Teléfono:</strong> ${telefono}</p>` : ""}
-        <p><strong>Asunto:</strong> ${asunto}</p>
-        <p><strong>Mensaje:</strong></p>
-        <p>${mensaje.replace(/\n/g, "<br />")}</p>
+        <div style="font-family: Arial, Helvetica, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f4f4f4; padding: 24px;">
+          <div style="background-color: #ffffff; border-radius: 8px; overflow: hidden; border: 1px solid #e5e5e5;">
+            <div style="background-color: #dc2626; padding: 20px 24px;">
+              <h1 style="margin: 0; color: #ffffff; font-size: 18px; font-weight: 600;">
+                Nuevo mensaje de contacto
+              </h1>
+            </div>
+            <div style="padding: 24px;">
+              <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+                <tr>
+                  <td style="padding: 6px 0; color: #6b7280; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; width: 100px; vertical-align: top;">Nombre</td>
+                  <td style="padding: 6px 0; color: #111827; font-size: 14px;">${nombre}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 6px 0; color: #6b7280; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; vertical-align: top;">Email</td>
+                  <td style="padding: 6px 0; color: #111827; font-size: 14px;">
+                    <a href="mailto:${email}" style="color: #dc2626; text-decoration: none;">${email}</a>
+                  </td>
+                </tr>
+                ${
+                  telefono
+                    ? `<tr>
+                  <td style="padding: 6px 0; color: #6b7280; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; vertical-align: top;">Teléfono</td>
+                  <td style="padding: 6px 0; color: #111827; font-size: 14px;">${telefono}</td>
+                </tr>`
+                    : ""
+                }
+                <tr>
+                  <td style="padding: 6px 0; color: #6b7280; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; vertical-align: top;">Asunto</td>
+                  <td style="padding: 6px 0; color: #111827; font-size: 14px; font-weight: 600;">${asunto}</td>
+                </tr>
+              </table>
+              <div style="border-top: 1px solid #e5e5e5; padding-top: 16px;">
+                <p style="margin: 0 0 8px; color: #6b7280; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em;">Mensaje</p>
+                <p style="margin: 0; color: #111827; font-size: 14px; line-height: 1.6;">${mensaje.replace(/\n/g, "<br />")}</p>
+              </div>
+            </div>
+            <div style="background-color: #f9fafb; padding: 16px 24px; border-top: 1px solid #e5e5e5;">
+              <p style="margin: 0; color: #9ca3af; font-size: 12px;">Enviado desde el formulario de contacto de movigas.com.ar</p>
+            </div>
+          </div>
+        </div>
       `,
     });
 
