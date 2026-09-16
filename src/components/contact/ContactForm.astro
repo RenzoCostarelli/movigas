@@ -1,0 +1,161 @@
+---
+---
+
+<div class="self-start">
+  <h2 class="text-xl font-semibold mb-8 text-neutral-900">
+    Dejanos tu consulta
+  </h2>
+
+  <form data-contact-form class="flex flex-col gap-5" novalidate>
+    <div class="flex flex-col gap-2">
+      <label for="nombre" class="text-xs uppercase tracking-widest">
+        Nombre y Apellido
+      </label>
+      <input
+        id="nombre"
+        type="text"
+        name="nombre"
+        required
+        placeholder="Juan García"
+        class="w-full bg-neutral-100 border border-neutral-300 rounded-md px-4 py-3 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-red-500 transition-colors"
+      />
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <label for="email" class="text-xs uppercase tracking-widest">
+        Email
+      </label>
+      <input
+        id="email"
+        type="email"
+        name="email"
+        required
+        placeholder="juan@empresa.com"
+        class="w-full bg-neutral-100 border border-neutral-300 rounded-md px-4 py-3 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-red-500 transition-colors"
+      />
+    </div>
+
+    <!-- Teléfono -->
+    <div class="flex flex-col gap-2">
+      <label for="telefono" class="text-xs uppercase tracking-widest">
+        Teléfono
+      </label>
+      <input
+        id="telefono"
+        type="tel"
+        name="telefono"
+        placeholder="+54 341 000 0000"
+        class="w-full bg-neutral-100 border border-neutral-300 rounded-md px-4 py-3 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-red-500 transition-colors"
+      />
+    </div>
+
+    <!-- Asunto -->
+    <div class="flex flex-col gap-2">
+      <label for="asunto" class="text-xs uppercase tracking-widest">
+        Asunto
+      </label>
+      <input
+        id="asunto"
+        type="text"
+        name="asunto"
+        required
+        placeholder="Consulta comercial"
+        class="w-full bg-neutral-100 border border-neutral-300 rounded-md px-4 py-3 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-red-500 transition-colors"
+      />
+    </div>
+
+    <!-- Mensaje -->
+    <div class="flex flex-col gap-2">
+      <label for="mensaje" class="text-xs uppercase tracking-widest">
+        Mensaje
+      </label>
+      <textarea
+        id="mensaje"
+        name="mensaje"
+        required
+        rows="5"
+        placeholder="Escribí tu consulta aquí..."
+        class="w-full bg-neutral-100 border border-neutral-300 rounded-md px-4 py-3 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-red-500 transition-colors resize-none"
+      ></textarea>
+    </div>
+
+    <button
+      type="submit"
+      data-submit-btn
+      class="mt-2 w-full bg-red-600 hover:bg-red-700 active:bg-red-800 text-white text-sm font-semibold uppercase tracking-widest py-4 rounded-full transition-colors"
+    >
+      Enviar
+    </button>
+
+    <p data-form-feedback class="text-sm text-center hidden"></p>
+  </form>
+</div>
+
+<script>
+  import type { ContactApiResponse } from "../../types/contact";
+
+  const form = document.querySelector(
+    "[data-contact-form]",
+  ) as HTMLFormElement;
+  const feedback = document.querySelector(
+    "[data-form-feedback]",
+  ) as HTMLElement;
+  const submitBtn = document.querySelector(
+    "[data-submit-btn]",
+  ) as HTMLButtonElement;
+
+  function showFeedback(message: string, ok: boolean) {
+    feedback.textContent = message;
+    feedback.classList.remove("hidden", "text-red-400", "text-green-400");
+    feedback.classList.add(ok ? "text-green-400" : "text-red-400");
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Enviando...";
+
+    const data = Object.fromEntries(new FormData(form).entries());
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      const result = (await res.json()) as ContactApiResponse;
+
+      if (!res.ok || !result.success) {
+        throw new Error(result.message || "No se pudo enviar el mensaje.");
+      }
+
+      submitBtn.textContent = "Enviado";
+      showFeedback(
+        "Tu mensaje fue enviado correctamente. Te contactaremos a la brevedad.",
+        true,
+      );
+      form.reset();
+    } catch (err) {
+      submitBtn.textContent = "Enviar";
+      showFeedback(
+        err instanceof Error
+          ? err.message
+          : "Ocurrió un error al enviar el mensaje. Intentá nuevamente.",
+        false,
+      );
+    } finally {
+      setTimeout(() => {
+        submitBtn.disabled = false;
+        if (submitBtn.textContent === "Enviado") submitBtn.textContent = "Enviar";
+        feedback.classList.add("hidden");
+      }, 5000);
+    }
+  });
+</script>
